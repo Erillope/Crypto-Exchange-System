@@ -10,13 +10,13 @@ import application.dto.TransactionHistoryDTO;
  *
  * @author erillope
  */
-public class WalletService implements DepositeMoneyUserCase, GetTransactionHistoryUserCase, GetWalletBalanceUserCase{
-    private final DepositeMoneyUserCase depositeUserCase;
-    private final GetTransactionHistoryUserCase getHistoryUserCase;
-    private final GetWalletBalanceUserCase getBalanceUserCase;
+public class WalletService implements DepositeMoneyUseCase, GetTransactionHistoryUseCase, GetWalletBalanceUseCase{
+    private final DepositeMoneyUseCase depositeUserCase;
+    private final GetTransactionHistoryUseCase getHistoryUserCase;
+    private final GetWalletBalanceUseCase getBalanceUserCase;
 
-    public WalletService(DepositeMoneyUserCase depositeUserCase, 
-            GetTransactionHistoryUserCase getHistoryUserCase, GetWalletBalanceUserCase getBalanceUserCase) {
+    public WalletService(DepositeMoneyUseCase depositeUserCase, 
+            GetTransactionHistoryUseCase getHistoryUserCase, GetWalletBalanceUseCase getBalanceUserCase) {
         this.depositeUserCase = depositeUserCase;
         this.getHistoryUserCase = getHistoryUserCase;
         this.getBalanceUserCase = getBalanceUserCase;

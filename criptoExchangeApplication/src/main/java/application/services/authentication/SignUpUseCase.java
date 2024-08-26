@@ -6,6 +6,6 @@ import application.dto.SignUpDTO;
  *
  * @author erillope
  */
-public interface SignUpUserCase {
+public interface SignUpUseCase {
     public void signUp(SignUpDTO dto);
 }

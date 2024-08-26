@@ -7,6 +7,6 @@ import application.dto.GetWalletBalanceDTO;
  *
  * @author erillope
  */
-public interface GetWalletBalanceUserCase {
+public interface GetWalletBalanceUseCase {
     public BalanceDTO getBalance(GetWalletBalanceDTO dto);
 }

@@ -6,6 +6,6 @@ import application.dto.DepositeMoneyDTO;
  *
  * @author erillope
  */
-public interface DepositeMoneyUserCase {
+public interface DepositeMoneyUseCase {
     public void depositeMoney(DepositeMoneyDTO dto);
 }

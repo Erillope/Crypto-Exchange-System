@@ -10,15 +10,15 @@ import models.user.User;
  *
  * @author erillope
  */
-public class AuthenticationService implements SignUpUserCase, SignInUserCase, SignOutUserCase{
+public class AuthenticationService implements SignUpUseCase, SignInUseCase, SignOutUseCase{
     private User signedUser;
-    private final SignUpUserCase signUpUserCase;
-    private final SignInUserCase signInUserCase;
-    private final SignOutUserCase signOutUserCase;
+    private final SignUpUseCase signUpUserCase;
+    private final SignInUseCase signInUserCase;
+    private final SignOutUseCase signOutUserCase;
     private final UserRepository userRepository;
 
-    public AuthenticationService(SignUpUserCase signUpUserCase, SignInUserCase signInUserCase, 
-            SignOutUserCase signOutUserCase, UserRepository userRepository) {
+    public AuthenticationService(SignUpUseCase signUpUserCase, SignInUseCase signInUserCase, 
+            SignOutUseCase signOutUserCase, UserRepository userRepository) {
         this.signUpUserCase = signUpUserCase;
         this.signInUserCase = signInUserCase;
         this.signOutUserCase = signOutUserCase;

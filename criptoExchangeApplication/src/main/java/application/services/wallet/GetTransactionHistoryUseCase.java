@@ -7,6 +7,6 @@ import application.dto.TransactionHistoryDTO;
  *
  * @author erillope
  */
-public interface GetTransactionHistoryUserCase {
+public interface GetTransactionHistoryUseCase {
     public TransactionHistoryDTO getHistory(GetTransactionHistoryDTO dto);
 }
