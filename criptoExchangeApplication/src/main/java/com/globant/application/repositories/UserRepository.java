@@ -1,7 +1,7 @@
-package application.repositories;
+package com.globant.application.repositories;
 
-import models.user.User;
-import models.user.UserID;
+import com.globant.domain.user.User;
+import com.globant.domain.user.UserID;
 
 /**
  *

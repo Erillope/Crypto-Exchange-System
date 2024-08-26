@@ -1,6 +1,6 @@
-package application.services.exchange;
+package com.globant.application.services.exchange;
 
-import application.dto.PlaceBuyOrderDTO;
+import com.globant.application.dto.PlaceBuyOrderDTO;
 
 /**
  *

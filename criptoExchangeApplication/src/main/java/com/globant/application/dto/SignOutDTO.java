@@ -1,11 +1,11 @@
-package application.dto;
+package com.globant.application.dto;
 
 /**
  *
  * @author erillope
  */
 public class SignOutDTO {
-    private String id;
+    private final String id;
 
     public SignOutDTO(String id) {
         this.id = id;

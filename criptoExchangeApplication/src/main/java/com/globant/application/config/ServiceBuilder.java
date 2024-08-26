@@ -1,8 +1,8 @@
 package com.globant.application.config;
 
-import application.services.authentication.AuthenticationService;
-import application.services.exchange.ExchangeService;
-import application.services.wallet.WalletService;
+import com.globant.application.services.authentication.AuthenticationService;
+import com.globant.application.services.exchange.ExchangeService;
+import com.globant.application.services.wallet.WalletService;
 
 /**
  *

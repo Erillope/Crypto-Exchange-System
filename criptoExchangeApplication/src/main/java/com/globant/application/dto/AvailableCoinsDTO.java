@@ -1,7 +1,7 @@
-package application.dto;
+package com.globant.application.dto;
 
-import models.crypto.CryptoCurrencyName;
-import models.util.OnlyReadCollection;
+import com.globant.domain.crypto.CryptoCurrencyName;
+import com.globant.domain.util.OnlyReadCollection;
 
 /**
  *

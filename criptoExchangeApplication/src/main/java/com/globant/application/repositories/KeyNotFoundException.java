@@ -1,4 +1,4 @@
-package application.repositories;
+package com.globant.application.repositories;
 
 /**
  *

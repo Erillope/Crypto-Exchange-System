@@ -1,10 +1,10 @@
-package application.services.wallet;
+package com.globant.application.services.wallet;
 
-import application.dto.BalanceDTO;
-import application.dto.DepositeMoneyDTO;
-import application.dto.GetTransactionHistoryDTO;
-import application.dto.GetWalletBalanceDTO;
-import application.dto.TransactionHistoryDTO;
+import com.globant.application.dto.BalanceDTO;
+import com.globant.application.dto.DepositeMoneyDTO;
+import com.globant.application.dto.GetTransactionHistoryDTO;
+import com.globant.application.dto.GetWalletBalanceDTO;
+import com.globant.application.dto.TransactionHistoryDTO;
 
 /**
  *

@@ -1,14 +1,14 @@
-package application.dto;
+package com.globant.application.dto;
 
-import models.exchange.Transaction;
-import models.util.OnlyReadCollection;
+import com.globant.domain.exchange.Transaction;
+import com.globant.domain.util.OnlyReadCollection;
 
 /**
  *
  * @author erillope
  */
 public class TransactionHistoryDTO {
-    private OnlyReadCollection<Transaction> history;
+    private final OnlyReadCollection<Transaction> history;
     
     public TransactionHistoryDTO(OnlyReadCollection<Transaction> history){
         this.history = history;

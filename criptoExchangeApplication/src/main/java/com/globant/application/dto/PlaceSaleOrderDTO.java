@@ -1,7 +1,7 @@
-package application.dto;
+package com.globant.application.dto;
 
 import java.math.BigDecimal;
-import models.crypto.CryptoCurrencyName;
+import com.globant.domain.crypto.CryptoCurrencyName;
 
 /**
  *

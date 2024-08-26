@@ -1,10 +1,10 @@
-package application.services.authentication;
+package com.globant.application.services.authentication;
 
-import application.dto.SignInDTO;
-import application.dto.SignOutDTO;
-import application.dto.SignUpDTO;
-import application.repositories.UserRepository;
-import models.user.User;
+import com.globant.application.dto.SignInDTO;
+import com.globant.application.dto.SignOutDTO;
+import com.globant.application.dto.SignUpDTO;
+import com.globant.application.repositories.UserRepository;
+import com.globant.domain.user.User;
 
 /**
  *

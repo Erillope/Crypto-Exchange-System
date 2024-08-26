@@ -1,6 +1,6 @@
-package application.services.exchange;
+package com.globant.application.services.exchange;
 
-import application.dto.ExchangeCryptoCurrencyDTO;
+import com.globant.application.dto.ExchangeCryptoCurrencyDTO;
 
 /**
  *

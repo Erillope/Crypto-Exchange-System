@@ -1,6 +1,6 @@
-package application.services.wallet;
+package com.globant.application.services.wallet;
 
-import application.dto.DepositeMoneyDTO;
+import com.globant.application.dto.DepositeMoneyDTO;
 
 /**
  *

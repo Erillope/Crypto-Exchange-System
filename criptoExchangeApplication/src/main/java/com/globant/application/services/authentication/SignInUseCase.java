@@ -1,6 +1,6 @@
-package application.services.authentication;
+package com.globant.application.services.authentication;
 
-import application.dto.SignInDTO;
+import com.globant.application.dto.SignInDTO;
 
 /**
  *

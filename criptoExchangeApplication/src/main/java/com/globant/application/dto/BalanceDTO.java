@@ -1,10 +1,10 @@
-package application.dto;
+package com.globant.application.dto;
 
 import java.math.BigDecimal;
 import java.util.Map;
-import models.crypto.CryptoCurrencyName;
-import models.util.OnlyReadMap;
-import models.util.OnlyReadMapImpl;
+import com.globant.domain.crypto.CryptoCurrencyName;
+import com.globant.domain.util.OnlyReadMap;
+import com.globant.domain.util.OnlyReadMapImpl;
 
 /**
  *

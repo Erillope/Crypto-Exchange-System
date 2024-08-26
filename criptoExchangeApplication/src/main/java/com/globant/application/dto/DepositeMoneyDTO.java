@@ -1,4 +1,4 @@
-package application.dto;
+package com.globant.application.dto;
 
 import java.math.BigDecimal;
 

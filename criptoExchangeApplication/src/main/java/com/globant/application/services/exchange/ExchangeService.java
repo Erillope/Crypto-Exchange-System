@@ -1,8 +1,8 @@
-package application.services.exchange;
+package com.globant.application.services.exchange;
 
-import application.dto.ExchangeCryptoCurrencyDTO;
-import application.dto.PlaceBuyOrderDTO;
-import application.dto.PlaceSaleOrderDTO;
+import com.globant.application.dto.ExchangeCryptoCurrencyDTO;
+import com.globant.application.dto.PlaceBuyOrderDTO;
+import com.globant.application.dto.PlaceSaleOrderDTO;
 
 /**
  *
