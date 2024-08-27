@@ -19,6 +19,8 @@ public abstract class BankAccount implements Serializable{
     
     public NumberAccount getNumberAccount(){return numberAccount;}
     
+    public BigDecimal getMoney(){return money;}
+    
     public abstract void add(BigDecimal money);
     
     public abstract void reduce(BigDecimal money) throws InsufficientMoneyException;

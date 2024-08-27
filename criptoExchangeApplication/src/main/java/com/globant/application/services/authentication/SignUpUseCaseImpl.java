@@ -26,7 +26,7 @@ public class SignUpUseCaseImpl implements SignUpUseCase{
     private final WalletFactory walletFactory;
     private final BankAccountFactory bankAccountFactory;
 
-    public SignUpUseCaseImpl(UserRepository userRepository, Repository bankAccountRepository) {
+    public SignUpUseCaseImpl(UserRepository userRepository, Repository<String, BankAccount> bankAccountRepository) {
         this.userRepository = userRepository;
         this.bankAccountRepository = bankAccountRepository;
         this.userAccountFactory = new UserAccountFactory();

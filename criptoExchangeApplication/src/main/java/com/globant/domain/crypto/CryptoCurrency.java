@@ -1,6 +1,7 @@
 package com.globant.domain.crypto;
 
 import com.globant.domain.exceptions.InsufficientCurrencyException;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -8,12 +9,15 @@ import java.math.BigDecimal;
  * @author erillope
  * @param <T>
  */
-public abstract class CryptoCurrency<T extends CryptoCurrency<T>> {
-    public BigDecimal INITIAL_PRICE;
-    private final BigDecimal amount;
+public abstract class CryptoCurrency<T extends CryptoCurrency<T>> implements Serializable{
+    protected BigDecimal amount;
     
     public CryptoCurrency(){
         amount = BigDecimal.ZERO;
+    }
+    
+    public CryptoCurrency(BigDecimal amount){
+        this.amount = amount;
     }
     
     public BigDecimal getAmount(){return amount;}

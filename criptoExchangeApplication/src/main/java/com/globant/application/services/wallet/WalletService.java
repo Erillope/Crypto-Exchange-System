@@ -5,6 +5,7 @@ import com.globant.application.dto.DepositeMoneyDTO;
 import com.globant.application.dto.GetTransactionHistoryDTO;
 import com.globant.application.dto.GetWalletBalanceDTO;
 import com.globant.application.dto.TransactionHistoryDTO;
+import com.globant.domain.exceptions.DomainException;
 
 /**
  *
@@ -23,7 +24,7 @@ public class WalletService implements DepositeMoneyUseCase, GetTransactionHistor
     }
 
     @Override
-    public void depositeMoney(DepositeMoneyDTO dto) {
+    public void depositeMoney(DepositeMoneyDTO dto) throws DomainException{
         this.depositeUserCase.depositeMoney(dto);
     }
 
