@@ -1,21 +1,23 @@
 package com.globant.domain.user;
 
+import com.globant.domain.exceptions.InsufficientMoneyException;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
  *
  * @author erillope
  */
-public abstract class BankAccount {
-    private final String numberAccount;
+public abstract class BankAccount implements Serializable{
+    private final NumberAccount numberAccount;
     protected BigDecimal money;
     
-    public BankAccount(String numberAccount, BigDecimal money){
+    public BankAccount(NumberAccount numberAccount, BigDecimal money){
         this.numberAccount = numberAccount;
         this.money = money;
     }
     
-    public String getNumberAccount(){return numberAccount;}
+    public NumberAccount getNumberAccount(){return numberAccount;}
     
     public abstract void add(BigDecimal money);
     

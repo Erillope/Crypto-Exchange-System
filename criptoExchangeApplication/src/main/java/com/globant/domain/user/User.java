@@ -4,19 +4,22 @@ import java.math.BigDecimal;
 import com.globant.domain.crypto.CryptoCurrency;
 import com.globant.domain.crypto.CryptoCurrencyName;
 import com.globant.domain.crypto.WalletID;
+import com.globant.domain.exchange.BuyOrder;
 import com.globant.domain.exchange.SalesOrder;
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
  *
  * @author erillope
  */
-public class User {
-    private final String numberAccount;
+public class User implements Serializable{
+    private final NumberAccount numberAccount;
     private final UserID id;
     private final WalletID walletID;
     private final UserAccount account;
     
-    public User(String numberAccount, WalletID walletID, UserAccount account){
+    public User(NumberAccount numberAccount, WalletID walletID, UserAccount account){
         this.numberAccount = numberAccount;
         this.walletID = walletID;
         this.account = account;
@@ -27,7 +30,11 @@ public class User {
         return new SalesOrder(amount, cryptoCurrency, id, minPrice);
     }
     
-    public String getNumberAccount(){return numberAccount;}
+    public BuyOrder generateBuyOrder(CryptoCurrency amount, CryptoCurrencyName cryptoCurrency, BigDecimal maxPrice){
+        return new BuyOrder(amount, cryptoCurrency, id, maxPrice);
+    }
+    
+    public NumberAccount getNumberAccount(){return numberAccount;}
     
     public UserID getUserID(){return id;}
     

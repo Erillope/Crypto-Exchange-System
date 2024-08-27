@@ -4,6 +4,7 @@ import com.globant.application.dto.SignInDTO;
 import com.globant.application.dto.SignOutDTO;
 import com.globant.application.dto.SignUpDTO;
 import com.globant.application.repositories.UserRepository;
+import com.globant.domain.exceptions.DomainException;
 import com.globant.domain.user.User;
 
 /**
@@ -28,7 +29,7 @@ public class AuthenticationService implements SignUpUseCase, SignInUseCase, Sign
     public User getSignedUser(){return signedUser;}
 
     @Override
-    public void signUp(SignUpDTO dto) {
+    public void signUp(SignUpDTO dto) throws DomainException{
         this.signUpUserCase.signUp(dto);
         signedUser = userRepository.getByEmail(dto.getEmail());
     }

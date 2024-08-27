@@ -1,10 +1,10 @@
-package com.globant.domain.crypto;
+package com.globant.domain.exceptions;
 
 /**
  *
  * @author erillope
  */
-public class InsufficientCurrencyException extends Exception{
+public class InsufficientCurrencyException extends DomainException{
     public InsufficientCurrencyException(String msg) {
         super(msg);
     }

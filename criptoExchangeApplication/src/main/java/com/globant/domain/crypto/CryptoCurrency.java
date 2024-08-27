@@ -1,5 +1,6 @@
 package com.globant.domain.crypto;
 
+import com.globant.domain.exceptions.InsufficientCurrencyException;
 import java.math.BigDecimal;
 
 /**
