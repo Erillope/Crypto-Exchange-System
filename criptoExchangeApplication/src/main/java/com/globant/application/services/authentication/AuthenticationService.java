@@ -1,7 +1,6 @@
 package com.globant.application.services.authentication;
 
 import com.globant.application.dto.SignInDTO;
-import com.globant.application.dto.SignOutDTO;
 import com.globant.application.dto.SignUpDTO;
 import com.globant.application.repositories.UserRepository;
 import com.globant.domain.exceptions.DomainException;
@@ -15,14 +14,11 @@ public class AuthenticationService implements SignUpUseCase, SignInUseCase, Sign
     private User signedUser;
     private final SignUpUseCase signUpUserCase;
     private final SignInUseCase signInUserCase;
-    private final SignOutUseCase signOutUserCase;
     private final UserRepository userRepository;
 
-    public AuthenticationService(SignUpUseCase signUpUserCase, SignInUseCase signInUserCase, 
-            SignOutUseCase signOutUserCase, UserRepository userRepository) {
+    public AuthenticationService(SignUpUseCase signUpUserCase, SignInUseCase signInUserCase, UserRepository userRepository) {
         this.signUpUserCase = signUpUserCase;
         this.signInUserCase = signInUserCase;
-        this.signOutUserCase = signOutUserCase;
         this.userRepository = userRepository;
     }
     
@@ -31,17 +27,16 @@ public class AuthenticationService implements SignUpUseCase, SignInUseCase, Sign
     @Override
     public void signUp(SignUpDTO dto) throws DomainException{
         this.signUpUserCase.signUp(dto);
+    }
+
+    @Override
+    public void signIn(SignInDTO dto) throws DomainException {
+        this.signInUserCase.signIn(dto);
         signedUser = userRepository.getByEmail(dto.getEmail());
     }
 
     @Override
-    public void signIn(SignInDTO dto) {
-        this.signInUserCase.signIn(dto);
-    }
-
-    @Override
-    public void signOut(SignOutDTO dto) {
-        this.signOutUserCase.signOut(dto);
+    public void signOut() {
         signedUser = null;
     }
 }

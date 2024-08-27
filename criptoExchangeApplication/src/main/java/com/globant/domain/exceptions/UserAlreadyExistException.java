@@ -8,4 +8,6 @@ public class UserAlreadyExistException extends DomainException{
     public UserAlreadyExistException(String msg) {
         super(msg);
     }
+    
+    public static UserAlreadyExistException alreadyExist(){return new UserAlreadyExistException("THIS USER ALREADY EXIST");}
 }

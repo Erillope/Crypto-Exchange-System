@@ -5,6 +5,7 @@ import com.globant.application.repositories.Repository;
 import com.globant.application.repositories.UserRepository;
 import com.globant.domain.crypto.Wallet;
 import com.globant.domain.exceptions.DomainException;
+import com.globant.domain.exceptions.UserAlreadyExistException;
 import com.globant.domain.factories.BankAccountFactory;
 import com.globant.domain.factories.UserAccountFactory;
 import com.globant.domain.factories.UserFactory;
@@ -44,6 +45,8 @@ public class SignUpUseCaseImpl implements SignUpUseCase{
         UserAccount account = userAccountFactory.createAccount(dto.getName(), dto.getEmail(), dto.getPassword());
         Wallet wallet = walletFactory.createWallet();
         User user = userFactory.createUser(dto.getNumberAccount(), wallet.getID(), account);
+        if (userRepository.containEmail(user.getUserAccount().getEmail()))
+        {throw UserAlreadyExistException.alreadyExist();}
         userRepository.save(user.getUserID(), user);
     }
     
