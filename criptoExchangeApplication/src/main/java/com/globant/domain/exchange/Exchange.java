@@ -6,6 +6,8 @@ import java.util.Map;
 import com.globant.domain.crypto.CryptoCurrencyName;
 import com.globant.domain.crypto.WalletID;
 import com.globant.domain.crypto.WalletUUID;
+import com.globant.domain.exceptions.InvalidNumberAccountException;
+import com.globant.domain.user.NumberAccount;
 
 /**
  *
@@ -13,18 +15,26 @@ import com.globant.domain.crypto.WalletUUID;
  */
 public class Exchange {
     private static Exchange instance = null;
+    private final static Map<CryptoCurrencyName, BigDecimal> initialPrices;
+    static {
+        initialPrices = new HashMap<>();
+        initialPrices.put(CryptoCurrencyName.BITCOIN, new BigDecimal("10"));
+        initialPrices.put(CryptoCurrencyName.ETHEREUM, new BigDecimal("5"));
+        initialPrices.put(CryptoCurrencyName.RIPPLE, new BigDecimal("3"));
+    }
     
-    private final String numberAccount;
+    private NumberAccount numberAccount;
     private WalletID walletID;
-    private final Map<CryptoCurrencyName, BigDecimal> marketPrices;
+    private Map<CryptoCurrencyName, BigDecimal> marketPrices;
     
     private Exchange(){
-        numberAccount = "7676543879";
+        try{numberAccount = new NumberAccount("123456789");}
+        catch(InvalidNumberAccountException e){e.printStackTrace();}
         walletID = new WalletUUID();
         marketPrices = new HashMap<>();
     }
     
-    public String getNumberAccount(){return numberAccount;}
+    public NumberAccount getNumberAccount(){return numberAccount;}
     
     public WalletID getWalletID(){return walletID;}
     
@@ -39,5 +49,5 @@ public class Exchange {
         return new Exchange();
     }
     
-    public static void loadInstance(Exchange instance){Exchange.instance = instance;}
-}
+    public static BigDecimal getInitialPrice(CryptoCurrencyName cryptoName){return initialPrices.get(cryptoName);}
+ }

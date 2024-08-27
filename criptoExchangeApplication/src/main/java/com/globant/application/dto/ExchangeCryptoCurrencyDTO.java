@@ -1,7 +1,8 @@
 package com.globant.application.dto;
 
-import java.math.BigDecimal;
+import com.globant.domain.crypto.CryptoCurrency;
 import com.globant.domain.crypto.CryptoCurrencyName;
+import com.globant.domain.user.UserID;
 
 /**
  *
@@ -9,19 +10,20 @@ import com.globant.domain.crypto.CryptoCurrencyName;
  */
 public class ExchangeCryptoCurrencyDTO {
     private final CryptoCurrencyName cryptoName;
-    private final BigDecimal amount;
-    private final String UserID;
+    private final CryptoCurrency amount;
+    private UserID userID;
 
-    public ExchangeCryptoCurrencyDTO(CryptoCurrencyName cryptoName, BigDecimal amount, String UserID) {
+    public ExchangeCryptoCurrencyDTO(CryptoCurrencyName cryptoName, CryptoCurrency amount) {
         this.cryptoName = cryptoName;
         this.amount = amount;
-        this.UserID = UserID;
     }
 
     public CryptoCurrencyName getCryptoName(){return cryptoName;}
 
-    public BigDecimal getAmount(){return amount;}
+    public CryptoCurrency getAmount(){return amount;}
 
-    public String getUserID(){return UserID;}
+    public UserID getUserID(){return userID;}
+    
+    public void setUserID(UserID id){userID = id;}
     
 }
