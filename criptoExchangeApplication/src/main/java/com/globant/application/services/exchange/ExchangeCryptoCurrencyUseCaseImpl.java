@@ -18,7 +18,7 @@ import java.math.BigDecimal;
  *
  * @author erillope
  */
-public class ExchangeCryptoCurrencyUseCaseImpl implements ExchangeCryptoCurrencyUseCase{
+public class ExchangeCryptoCurrencyUseCaseImpl implements ExchangeCryptoCurrencysUseCase{
     private final UserRepository userRepository;
     private final Repository<String, BankAccount> bankAccountRepository;
     private final ExchangeInstance exchangeInstance;

@@ -9,12 +9,12 @@ import com.globant.domain.exceptions.DomainException;
  *
  * @author erillope
  */
-public class ExchangeService implements ExchangeCryptoCurrencyUseCase, PlaceBuyOrderUseCase, PlaceSaleOrderUseCase{
-    private ExchangeCryptoCurrencyUseCase exchangeUseCase;
+public class ExchangeService implements ExchangeCryptoCurrencysUseCase, PlaceBuyOrderUseCase, PlaceSaleOrderUseCase{
+    private ExchangeCryptoCurrencysUseCase exchangeUseCase;
     private PlaceBuyOrderUseCase placeBuyOrderUseCase;
     private PlaceSaleOrderUseCase placeSaleOrderUseCase;
 
-    public ExchangeService(ExchangeCryptoCurrencyUseCase exchangeUseCase, PlaceBuyOrderUseCase placeBuyOrderUseCase, PlaceSaleOrderUseCase placeSaleOrderUseCase) {
+    public ExchangeService(ExchangeCryptoCurrencysUseCase exchangeUseCase, PlaceBuyOrderUseCase placeBuyOrderUseCase, PlaceSaleOrderUseCase placeSaleOrderUseCase) {
         this.exchangeUseCase = exchangeUseCase;
         this.placeBuyOrderUseCase = placeBuyOrderUseCase;
         this.placeSaleOrderUseCase = placeSaleOrderUseCase;

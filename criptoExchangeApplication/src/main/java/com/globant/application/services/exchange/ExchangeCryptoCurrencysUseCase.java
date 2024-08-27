@@ -7,6 +7,6 @@ import com.globant.domain.exceptions.DomainException;
  *
  * @author erillope
  */
-public interface ExchangeCryptoCurrencyUseCase {
+public interface ExchangeCryptoCurrencysUseCase {
     public void exchange(ExchangeCryptoCurrencyDTO dto) throws DomainException;
 }
