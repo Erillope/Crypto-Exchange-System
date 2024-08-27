@@ -4,7 +4,7 @@ package com.globant.domain.exceptions;
  *
  * @author erillope
  */
-public class InsufficientMoneyException extends DomainException{
+public class InsufficientMoneyException extends BankException{
     public InsufficientMoneyException(String msg) {
         super(msg);
     }

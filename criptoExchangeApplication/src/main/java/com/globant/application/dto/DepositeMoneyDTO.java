@@ -1,5 +1,6 @@
 package com.globant.application.dto;
 
+import com.globant.domain.user.UserID;
 import java.math.BigDecimal;
 
 /**
@@ -8,14 +9,15 @@ import java.math.BigDecimal;
  */
 public class DepositeMoneyDTO {
     private final BigDecimal amount;
-    private final String userID;
+    private UserID userID;
     
-    public DepositeMoneyDTO(BigDecimal amount, String userID) {
+    public DepositeMoneyDTO(BigDecimal amount) {
         this.amount = amount;
-        this.userID = userID;
     }
     
     public BigDecimal getAmount(){return amount;}
     
-    public String getUserID(){return userID;}
+    public UserID getUserID(){return userID;}
+    
+    public void setUserID(UserID id){userID = id;}
 }
