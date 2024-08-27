@@ -1,12 +1,13 @@
 package com.globant.domain.exchange;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
  *
  * @author erillope
  */
-public class Transaction {
+public class Transaction implements Serializable{
     private final Order order;
     private final TransactionType type;
     private final BigDecimal totalPrice;

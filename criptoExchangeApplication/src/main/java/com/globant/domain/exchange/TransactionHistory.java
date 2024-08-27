@@ -5,12 +5,13 @@ import java.util.List;
 import com.globant.domain.user.UserID;
 import com.globant.domain.util.OnlyReadCollection;
 import com.globant.domain.util.OnlyReadCollectionImpl;
+import java.io.Serializable;
 
 /**
  *
  * @author erillope
  */
-public class TransactionHistory {
+public class TransactionHistory implements Serializable{
     private final UserID userID;
     private final List<Transaction> transactions;
     

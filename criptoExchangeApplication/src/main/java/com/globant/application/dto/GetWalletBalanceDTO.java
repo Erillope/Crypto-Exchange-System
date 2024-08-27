@@ -1,15 +1,18 @@
 package com.globant.application.dto;
 
+import com.globant.domain.user.UserID;
+
 /**
  *
  * @author erillope
  */
 public class GetWalletBalanceDTO {
-    private final String userID;
+    private UserID userID;
     
-    public GetWalletBalanceDTO(String userID){
-        this.userID = userID;
+    public GetWalletBalanceDTO(){
     }
     
-    public String getUserID(){return userID;}
+    public UserID getUserID(){return userID;}
+    
+    public void setUserID(UserID id){userID = id;}
 }

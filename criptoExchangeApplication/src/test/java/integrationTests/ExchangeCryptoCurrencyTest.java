@@ -1,6 +1,5 @@
 package integrationTests;
 
-import com.globant.application.dto.DepositeMoneyDTO;
 import com.globant.application.dto.ExchangeCryptoCurrencyDTO;
 import com.globant.application.repositories.BankAccountSerRepository;
 import com.globant.application.repositories.ExchangeInstance;
@@ -9,17 +8,13 @@ import com.globant.application.repositories.SerExchangeInstance;
 import com.globant.application.repositories.UserRepository;
 import com.globant.application.repositories.UserSerRepository;
 import com.globant.application.repositories.WalletSerRepository;
-import com.globant.application.services.exchange.ExchangeCryptoCurrencyUseCase;
 import com.globant.application.services.exchange.ExchangeCryptoCurrencyUseCaseImpl;
 import com.globant.application.services.wallet.BankTransactionExecuter;
 import com.globant.application.services.wallet.BankTransactionExecuterImpl;
-import com.globant.application.services.wallet.DepositeMoneyUseCase;
-import com.globant.application.services.wallet.DepositeMoneyUseCaseImpl;
 import com.globant.domain.crypto.Bitcoin;
 import com.globant.domain.crypto.CryptoCurrencyName;
 import com.globant.domain.crypto.Wallet;
 import com.globant.domain.crypto.WalletID;
-import com.globant.domain.crypto.WalletUUID;
 import com.globant.domain.factories.BankAccountFactory;
 import com.globant.domain.factories.BankName;
 import com.globant.domain.factories.UserFactory;
@@ -29,6 +24,7 @@ import com.globant.domain.user.GmailAccount;
 import com.globant.domain.user.User;
 import com.globant.domain.user.UserAccount;
 import java.math.BigDecimal;
+import com.globant.application.services.exchange.ExchangeCryptoCurrencyUseCase;
 
 /**
  *

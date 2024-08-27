@@ -4,12 +4,13 @@ import com.globant.domain.exceptions.InvalidAmountException;
 import com.globant.domain.crypto.CryptoCurrency;
 import com.globant.domain.crypto.CryptoCurrencyName;
 import com.globant.domain.user.UserID;
+import java.io.Serializable;
 
 /**
  *
  * @author erillope
  */
-public abstract class Order {
+public abstract class Order implements Serializable{
     private final CryptoCurrency amount;
     private final CryptoCurrencyName cryptoName;
     private final UserID userID;

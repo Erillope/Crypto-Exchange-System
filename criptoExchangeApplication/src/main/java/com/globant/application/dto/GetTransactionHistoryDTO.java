@@ -1,15 +1,18 @@
 package com.globant.application.dto;
 
+import com.globant.domain.user.UserID;
+
 /**
  *
  * @author erillope
  */
 public class GetTransactionHistoryDTO {
-    private final String userID;
+    private UserID userID;
     
-    public GetTransactionHistoryDTO(String userID){
-        this.userID = userID;
+    public GetTransactionHistoryDTO(){
     }
     
-    public String getUserID(){return userID;}
+    public UserID getUserID(){return userID;}
+    
+    public void setUserID(UserID id){userID = id;}
 }

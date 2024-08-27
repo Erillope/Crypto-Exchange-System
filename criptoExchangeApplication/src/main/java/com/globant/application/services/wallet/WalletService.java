@@ -29,12 +29,12 @@ public class WalletService implements DepositeMoneyUseCase, GetTransactionHistor
     }
 
     @Override
-    public TransactionHistoryDTO getHistory(GetTransactionHistoryDTO dto) {
+    public TransactionHistoryDTO getHistory(GetTransactionHistoryDTO dto) throws DomainException{
         return this.getHistoryUserCase.getHistory(dto);
     }
 
     @Override
-    public BalanceDTO getBalance(GetWalletBalanceDTO dto) {
+    public BalanceDTO getBalance(GetWalletBalanceDTO dto) throws DomainException{
         return this.getBalanceUserCase.getBalance(dto);
     }
 }

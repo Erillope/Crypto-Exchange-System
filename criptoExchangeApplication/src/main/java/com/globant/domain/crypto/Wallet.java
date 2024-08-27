@@ -1,6 +1,8 @@
 package com.globant.domain.crypto;
 
 import com.globant.domain.exceptions.InsufficientCurrencyException;
+import com.globant.domain.util.OnlyReadMap;
+import com.globant.domain.util.OnlyReadMapImpl;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +36,8 @@ public class Wallet implements Serializable{
     public void put(CryptoCurrencyName name, CryptoCurrency amount){cryptos.put(name, amount);}
     
     public CryptoCurrency get(CryptoCurrencyName name){return cryptos.get(name);}
+    
+    public OnlyReadMap getCryptos(){return new OnlyReadMapImpl(cryptos);}
     
     public WalletID getID(){return id;}
     
