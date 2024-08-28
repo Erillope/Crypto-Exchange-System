@@ -23,5 +23,9 @@ public class BuyOrder extends Order{
 
     @Override
     protected void verifyAmount() throws InvalidAmountException {
+         Exchange exchange = Exchange.getInstance();
+         BigDecimal price = exchange.getPrice(getCryptoName());
+         BigDecimal totalPrice = price.multiply(getAmount().getAmount());
+         if (totalPrice.compareTo(maxPrice) > 0){throw InvalidAmountException.invalidAmount();}
     }
 }

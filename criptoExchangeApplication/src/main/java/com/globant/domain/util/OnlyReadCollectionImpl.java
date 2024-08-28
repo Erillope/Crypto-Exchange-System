@@ -17,5 +17,15 @@ public class OnlyReadCollectionImpl<T> implements OnlyReadCollection<T>{
     public T get(int index){
         return collection.get(index);
     }
+
+    @Override
+    public boolean isEmpty() {
+        return collection.isEmpty();
+    }
+
+    @Override
+    public int size() {
+        return collection.size();
+    }
     
 }
