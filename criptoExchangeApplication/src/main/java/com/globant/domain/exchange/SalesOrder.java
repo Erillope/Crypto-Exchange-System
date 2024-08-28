@@ -19,10 +19,14 @@ public class SalesOrder extends Order{
     }
     
     public BigDecimal getMinPrice(){return minPrice;}
+    
 
     @Override
     protected void verifyAmount() throws InvalidAmountException {
-        //TODO
+        Exchange exchange = Exchange.getInstance();
+        BigDecimal price = exchange.getPrice(getCryptoName());
+        BigDecimal totalPrice = price.multiply(getAmount().getAmount());
+        if (totalPrice.compareTo(minPrice) < 0){throw InvalidAmountException.invalidAmount();}
     }
 
 

@@ -10,9 +10,9 @@ import com.globant.domain.exceptions.DomainException;
  * @author erillope
  */
 public class ExchangeService implements ExchangeCryptoCurrencyUseCase, PlaceBuyOrderUseCase, PlaceSaleOrderUseCase{
-    private ExchangeCryptoCurrencyUseCase exchangeUseCase;
-    private PlaceBuyOrderUseCase placeBuyOrderUseCase;
-    private PlaceSaleOrderUseCase placeSaleOrderUseCase;
+    private final ExchangeCryptoCurrencyUseCase exchangeUseCase;
+    private final PlaceBuyOrderUseCase placeBuyOrderUseCase;
+    private final PlaceSaleOrderUseCase placeSaleOrderUseCase;
 
     public ExchangeService(ExchangeCryptoCurrencyUseCase exchangeUseCase, PlaceBuyOrderUseCase placeBuyOrderUseCase, PlaceSaleOrderUseCase placeSaleOrderUseCase) {
         this.exchangeUseCase = exchangeUseCase;
@@ -26,12 +26,12 @@ public class ExchangeService implements ExchangeCryptoCurrencyUseCase, PlaceBuyO
     }
 
     @Override
-    public void placeBuyOrder(PlaceBuyOrderDTO dto) {
+    public void placeBuyOrder(PlaceBuyOrderDTO dto) throws DomainException{
         this.placeBuyOrderUseCase.placeBuyOrder(dto);
     }
 
     @Override
-    public void placeSaleOrder(PlaceSaleOrderDTO dto) {
+    public void placeSaleOrder(PlaceSaleOrderDTO dto) throws DomainException{
         this.placeSaleOrderUseCase.placeSaleOrder(dto);
     }
     

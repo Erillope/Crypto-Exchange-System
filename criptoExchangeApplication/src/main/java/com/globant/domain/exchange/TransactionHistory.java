@@ -26,4 +26,6 @@ public class TransactionHistory implements Serializable{
         return new OnlyReadCollectionImpl<>(transactions);
     }
     
+    public void addTransaction(Transaction transaction){transactions.add(transaction);}
+    
 }

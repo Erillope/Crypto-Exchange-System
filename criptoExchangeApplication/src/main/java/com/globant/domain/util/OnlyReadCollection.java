@@ -6,4 +6,8 @@ package com.globant.domain.util;
  */
 public interface OnlyReadCollection<T> {
     public T get(int index);
+    
+    public boolean isEmpty();
+    
+    public int size();
 }

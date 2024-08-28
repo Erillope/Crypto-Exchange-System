@@ -11,11 +11,13 @@ import java.io.Serializable;
  * @author erillope
  */
 public abstract class Order implements Serializable{
+    private final OrderID id;
     private final CryptoCurrency amount;
     private final CryptoCurrencyName cryptoName;
     private final UserID userID;
     
     public Order(CryptoCurrency amount, CryptoCurrencyName cryptoName, UserID userID){
+        id = new OrderUUID();
         this.amount = amount;
         this.cryptoName = cryptoName;
         this.userID = userID;
