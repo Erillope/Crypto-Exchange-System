@@ -11,4 +11,5 @@ public class NotFoundSalesOrderException extends ApplicationException{
     
     public static NotFoundSalesOrderException notFound()
     {return new NotFoundSalesOrderException("NOT FOUND SALES ORDER");}
+    
 }

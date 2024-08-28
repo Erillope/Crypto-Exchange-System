@@ -1,6 +1,7 @@
 package com.globant.infrastructure.fxml;
 
 import com.globant.application.config.Boot;
+import com.globant.application.config.ServiceBuilder;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,6 +16,12 @@ import java.io.IOException;
 public class FxmlApp extends Application implements Boot{
 
     private static Scene scene;
+    
+    private final ServiceBuilder serviceBuilder;
+    
+    public FxmlApp(ServiceBuilder serviceBuilder){
+        this.serviceBuilder = serviceBuilder;
+    }
 
     @Override
     public void start(Stage stage) throws IOException {
