@@ -19,7 +19,7 @@ public abstract class UserAccount implements Serializable{
     
     public UserAccount(String name, String email, String password) throws InvalidUserAccountException{
         this.name = name;
-        this.email = email;
+        this.email = email.toLowerCase();
         this.password = password;
         verifyAccount();
     }

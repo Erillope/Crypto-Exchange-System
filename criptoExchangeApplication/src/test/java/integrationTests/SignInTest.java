@@ -1,17 +1,11 @@
 package integrationTests;
 
+import com.globant.application.config.DefaultServiceBuilder;
+import com.globant.application.config.ServiceBuilder;
 import com.globant.application.dto.SignInDTO;
 import com.globant.application.dto.SignUpDTO;
-import com.globant.application.repositories.BankAccountSerRepository;
-import com.globant.application.repositories.Repository;
-import com.globant.application.repositories.UserRepository;
-import com.globant.application.repositories.UserSerRepository;
-import com.globant.application.services.authentication.SignInUseCase;
-import com.globant.application.services.authentication.SignInUseCaseImpl;
-import com.globant.application.services.authentication.SignUpUseCase;
-import com.globant.application.services.authentication.SignUpUseCaseImpl;
+import com.globant.application.services.authentication.AuthenticationService;
 import com.globant.domain.factories.BankName;
-import com.globant.domain.user.BankAccount;
 
 /**
  *
@@ -20,37 +14,35 @@ import com.globant.domain.user.BankAccount;
 public class SignInTest {
     private static void successSignInTest() throws Exception{
         try{
-            UserRepository userRepository = UserSerRepository.getInstance();
-            Repository<String, BankAccount> bankAccountRepository = BankAccountSerRepository.getInstance();
-            SignUpUseCase signUpUseCase = new SignUpUseCaseImpl(userRepository, bankAccountRepository);
+            ServiceBuilder builder = new DefaultServiceBuilder();
+            AuthenticationService authenticationService = builder.buildAuthenticationService();
             SignUpDTO dto = new SignUpDTO("Erick", "erillope@gmail.com", "Erillope123", "895763089", BankName.PACIFICO);
-            signUpUseCase.signUp(dto);
-            SignInUseCase signInUseCase = new SignInUseCaseImpl(userRepository);
+            authenticationService.signUp(dto);
             SignInDTO inDto = new SignInDTO("erillope@gmail.com", "Erillope123");
-            signInUseCase.signIn(inDto);
+            authenticationService.signIn(inDto);
             
-            System.out.println("verifyValidAccountTest Success");
+            if (authenticationService.getSignedUserDTO().getEmail().equals("erillope@gmail.com"))
+            {System.out.println("verifyValidAccountTest Success");}
+            else{throw new Exception("");}
         }
-        catch(Exception e){System.out.println("verifyValidAccountTest Failed");}
+        catch(Exception e){System.out.println("verifyValidAccountTest Failed");e.printStackTrace();}
     }
     
     private static void incorrectPasswordTest() throws Exception{
         try{
-            UserRepository userRepository = UserSerRepository.getInstance();
-            Repository<String, BankAccount> bankAccountRepository = BankAccountSerRepository.getInstance();
-            SignUpUseCase signUpUseCase = new SignUpUseCaseImpl(userRepository, bankAccountRepository);
+            ServiceBuilder builder = new DefaultServiceBuilder();
+            AuthenticationService authenticationService = builder.buildAuthenticationService();
             SignUpDTO dto = new SignUpDTO("Erick", "erillope@gmail.com", "Erillope123", "895763089", BankName.PACIFICO);
-            signUpUseCase.signUp(dto);
-            SignInUseCase signInUseCase = new SignInUseCaseImpl(userRepository);
+            authenticationService.signUp(dto);
             SignInDTO inDto = new SignInDTO("erillope@gmail.com", "Erillope1234");
-            signInUseCase.signIn(inDto);
+            authenticationService.signIn(inDto);
             
             System.out.println("verifyValidAccountTest Failed");
         }
-        catch(Exception e){System.out.println("verifyValidAccountTest Success");}
+        catch(Exception e){System.out.println("verifyValidAccountTest Success");e.printStackTrace();}
     }
     
     public static void main(String[] args) throws Exception{
-        
+        incorrectPasswordTest();
     }
 }

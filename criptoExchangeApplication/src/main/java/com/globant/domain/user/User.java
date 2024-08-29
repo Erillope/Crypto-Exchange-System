@@ -7,7 +7,6 @@ import com.globant.domain.crypto.WalletID;
 import com.globant.domain.exchange.BuyOrder;
 import com.globant.domain.exchange.SalesOrder;
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  *
