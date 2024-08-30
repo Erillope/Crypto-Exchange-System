@@ -2,6 +2,8 @@ package com.globant.application.repositories;
 
 import com.globant.domain.crypto.Wallet;
 import com.globant.domain.crypto.WalletID;
+import com.globant.domain.exceptions.KeyNotFoundException;
+import com.globant.domain.exceptions.WalletNotFoundException;
 import com.globant.domain.util.Serializer;
 
 /**
@@ -10,7 +12,7 @@ import com.globant.domain.util.Serializer;
  */
 public class WalletSerRepository extends SerRepository<WalletID, Wallet>{
     private static WalletSerRepository instance = null;
-    private final static String source = "src\\main\\resources\\com\\globant\\application\\serializables\\walletRepo.ser";
+    private final static String source = "src\\main\\resources\\serializables\\walletRepo.ser";
     
     private WalletSerRepository() {
         super(source);
@@ -22,4 +24,10 @@ public class WalletSerRepository extends SerRepository<WalletID, Wallet>{
         catch(Exception e){instance = new WalletSerRepository();}
         return instance;
     }
+
+    @Override
+    protected KeyNotFoundException throwNotFoundException() {
+        return WalletNotFoundException.walletNotFound();
+    }
+    
 }

@@ -25,4 +25,9 @@ public abstract class CryptoCurrency<T extends CryptoCurrency<T>> implements Ser
     public abstract T add(T amount);
     
     public abstract T reduce(T amount) throws InsufficientCurrencyException;
+
+    @Override
+    public String toString() {
+        return amount.toString();
+    }
 }

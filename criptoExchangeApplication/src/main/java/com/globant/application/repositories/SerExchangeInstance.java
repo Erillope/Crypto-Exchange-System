@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 public class SerExchangeInstance implements ExchangeInstance, Serializable{
     private static SerExchangeInstance instance = null;
-    private final static String source = "src\\main\\resources\\com\\globant\\application\\serializables\\exchange.ser";
+    private final static String source = "src\\main\\resources\\serializables\\exchange.ser";
     private Exchange exchangeInstance;
     
     private SerExchangeInstance() {

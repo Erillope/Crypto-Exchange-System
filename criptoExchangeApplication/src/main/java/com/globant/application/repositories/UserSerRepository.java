@@ -2,6 +2,7 @@ package com.globant.application.repositories;
 
 import com.globant.domain.exceptions.KeyNotFoundException;
 import com.globant.domain.exceptions.RepositoryConnectionException;
+import com.globant.domain.exceptions.UserNotFoundException;
 import com.globant.domain.user.User;
 import com.globant.domain.user.UserID;
 import com.globant.domain.util.Serializer;
@@ -14,7 +15,7 @@ import java.util.Map;
  */
 public class UserSerRepository extends SerRepository<UserID,User> implements UserRepository{
     private static UserSerRepository instance = null;
-    private final static String source = "src\\main\\resources\\com\\globant\\application\\serializables\\userRepo.ser";
+    private final static String source = "src\\main\\resources\\serializables\\userRepo.ser";
     private final Map<String, User> dataByEmail;
     
     private UserSerRepository() {
@@ -31,7 +32,7 @@ public class UserSerRepository extends SerRepository<UserID,User> implements Use
 
     @Override
     public User getByEmail(String email) throws KeyNotFoundException{
-        if (!containEmail(email)){throw KeyNotFoundException.keyNotFound();}
+        if (!containEmail(email)){throw throwNotFoundException();}
         return dataByEmail.get(email);
     }
 
@@ -45,5 +46,10 @@ public class UserSerRepository extends SerRepository<UserID,User> implements Use
         try{instance = (UserSerRepository)Serializer.desSerialize(source);}
         catch(Exception e){instance = new UserSerRepository();}
         return instance;
+    }
+
+    @Override
+    protected KeyNotFoundException throwNotFoundException() {
+        return UserNotFoundException.userNotFound();
     }
 }

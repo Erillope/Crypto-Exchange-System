@@ -2,6 +2,9 @@ package com.globant.infrastructure.fxml;
 
 import com.globant.application.config.Boot;
 import com.globant.application.config.ServiceBuilder;
+import com.globant.application.services.authentication.AuthenticationService;
+import com.globant.application.services.exchange.ExchangeService;
+import com.globant.application.services.wallet.WalletService;
 import com.globant.domain.exceptions.DomainException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -20,11 +23,15 @@ public class FxmlApp extends Application implements Boot{
 
     private static Scene scene;
     
-    public static ServiceBuilder serviceBuilder;
+    public static AuthenticationService authenticationService;
+    public static WalletService walletService;
+    public static ExchangeService exchangeService;
     
     public FxmlApp(ServiceBuilder serviceBuilder){
         super();
-        FxmlApp.serviceBuilder = serviceBuilder;
+        FxmlApp.authenticationService = serviceBuilder.buildAuthenticationService();
+        FxmlApp.walletService = serviceBuilder.buildWalletService();
+        FxmlApp.exchangeService = serviceBuilder.buildExchangeService();
     }
     
     public FxmlApp(){super();}

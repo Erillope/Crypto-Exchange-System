@@ -7,12 +7,11 @@ import com.globant.domain.user.UserID;
  * @author erillope
  */
 public class GetTransactionHistoryDTO {
-    private UserID userID;
+    private final UserID userID;
     
-    public GetTransactionHistoryDTO(){
+    public GetTransactionHistoryDTO(UserID userID){
+        this.userID = userID;
     }
     
     public UserID getUserID(){return userID;}
-    
-    public void setUserID(UserID id){userID = id;}
 }

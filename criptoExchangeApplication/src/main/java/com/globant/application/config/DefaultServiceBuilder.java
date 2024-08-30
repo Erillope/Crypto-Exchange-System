@@ -58,7 +58,7 @@ public class DefaultServiceBuilder implements ServiceBuilder{
     
     @Override
     public AuthenticationService buildAuthenticationService() {
-        SignUpUseCase signUpUseCase = new SignUpUseCaseImpl(userRepository, bankAccountRepository);
+        SignUpUseCase signUpUseCase = new SignUpUseCaseImpl(userRepository, bankAccountRepository, walletRepository);
         SignInUseCase signInUseCase = new SignInUseCaseImpl(userRepository);
         return new AuthenticationService(signUpUseCase, signInUseCase, userRepository);
     }
@@ -80,6 +80,11 @@ public class DefaultServiceBuilder implements ServiceBuilder{
         PlaceSaleOrderUseCase placeSaleOrderUseCase = new PlaceSaleOrderUseCaseImpl(userRepository, walletRepository, bankAccountRepository,
         exchangeInstance, transactionHistoryRepository, transactionExecuter);
         return new ExchangeService(exchangeCryptoCurrencyUseCase, placeBuyOrderUseCase, placeSaleOrderUseCase);
+    }
+
+    @Override
+    public Initializer buildInitializer() {
+        return new ExchangeInitializer(walletRepository, bankAccountRepository, exchangeInstance);
     }
     
 }

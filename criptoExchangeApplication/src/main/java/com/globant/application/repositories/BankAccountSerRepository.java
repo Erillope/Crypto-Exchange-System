@@ -1,5 +1,7 @@
 package com.globant.application.repositories;
 
+import com.globant.domain.exceptions.BankAccountNotFoundException;
+import com.globant.domain.exceptions.KeyNotFoundException;
 import com.globant.domain.user.BankAccount;
 import com.globant.domain.util.Serializer;
 
@@ -9,7 +11,7 @@ import com.globant.domain.util.Serializer;
  */
 public class BankAccountSerRepository extends SerRepository<String, BankAccount>{
     private static BankAccountSerRepository instance = null;
-    private final static String source = "src\\main\\resources\\com\\globant\\application\\serializables\\bankRepo.ser";
+    private final static String source = "src\\main\\resources\\serializables\\bankRepo.ser";
     
     private BankAccountSerRepository() {
         super(source);
@@ -20,5 +22,10 @@ public class BankAccountSerRepository extends SerRepository<String, BankAccount>
         try{instance = (BankAccountSerRepository)Serializer.desSerialize(source);}
         catch(Exception e){instance = new BankAccountSerRepository();}
         return instance;
+    }
+
+    @Override
+    protected KeyNotFoundException throwNotFoundException() {
+        return BankAccountNotFoundException.bankAccountNotFound();
     }
 }

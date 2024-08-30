@@ -22,6 +22,11 @@
             <PasswordField fx:id="passwordField" />
          </children>
       </HBox>
-      <Button mnemonicParsing="false" onAction="#signIp" text="Continue" />
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#signIp" text="Continue" />
+            <Button mnemonicParsing="false" onAction="#returnMenu" text="Return" />
+         </children>
+      </HBox>
    </children>
 </VBox>

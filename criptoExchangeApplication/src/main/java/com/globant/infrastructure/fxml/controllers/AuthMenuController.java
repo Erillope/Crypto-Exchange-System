@@ -14,5 +14,10 @@ public class AuthMenuController {
     private void signUp(ActionEvent event) throws IOException {
         FxmlApp.setRoot("signUp");
     }
+
+    @FXML
+    private void signIn(ActionEvent event) throws IOException {
+        FxmlApp.setRoot("signIn");
+    }
     
 }
