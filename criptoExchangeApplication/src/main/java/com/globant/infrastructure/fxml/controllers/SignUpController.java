@@ -30,12 +30,9 @@ public class SignUpController implements Initializable {
     private ChoiceBox<BankName> banckAccountChoice;
     @FXML
     private TextField numberAccountField;
-    
-    private AuthenticationService authenticationService;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.authenticationService = FxmlApp.serviceBuilder.buildAuthenticationService();
         banckAccountChoice.getItems().addAll(BankName.values());
     }    
     
@@ -44,10 +41,15 @@ public class SignUpController implements Initializable {
         SignUpDTO dto= new SignUpDTO(nameField.getText(), emailField.getText(), passwordField.getText(),
                 numberAccountField.getText(),banckAccountChoice.getValue());
         try{
-            this.authenticationService.signUp(dto);
+            FxmlApp.authenticationService.signUp(dto);
             FxmlApp.setRoot("mainMenu");
         }
         catch(DomainException e){FxmlApp.showErrorMessage(e);}  
+    }
+
+    @FXML
+    private void returnMenu(ActionEvent event) throws IOException {
+        FxmlApp.setRoot("authMenu");
     }
 
 }

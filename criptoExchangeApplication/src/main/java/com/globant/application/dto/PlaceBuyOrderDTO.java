@@ -12,13 +12,14 @@ import com.globant.domain.user.UserID;
 public class PlaceBuyOrderDTO {
     private final CryptoCurrencyName cryptoName;
     private final CryptoCurrency amount;
-    private UserID userID;
+    private final UserID userID;
     private final BigDecimal maxPrice;
 
-    public PlaceBuyOrderDTO(CryptoCurrencyName cryptoName, CryptoCurrency amount, BigDecimal maxPrice) {
+    public PlaceBuyOrderDTO(CryptoCurrencyName cryptoName, CryptoCurrency amount, BigDecimal maxPrice, UserID userID) {
         this.cryptoName = cryptoName;
         this.amount = amount;
         this.maxPrice = maxPrice;
+        this.userID = userID;
     }
     
     public CryptoCurrencyName getCryptoName(){return cryptoName;}
@@ -27,8 +28,5 @@ public class PlaceBuyOrderDTO {
 
     public UserID getUserID(){return userID;}
     
-    public BigDecimal getMaxPrice(){return maxPrice;}
-    
-    public void setUserID(UserID id){userID = id;}
-    
+    public BigDecimal getMaxPrice(){return maxPrice;}    
 }

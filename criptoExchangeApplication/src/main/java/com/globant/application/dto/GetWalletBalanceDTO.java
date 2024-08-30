@@ -7,12 +7,11 @@ import com.globant.domain.user.UserID;
  * @author erillope
  */
 public class GetWalletBalanceDTO {
-    private UserID userID;
+    private final UserID userID;
     
-    public GetWalletBalanceDTO(){
+    public GetWalletBalanceDTO(UserID userID){
+        this.userID = userID;
     }
     
     public UserID getUserID(){return userID;}
-    
-    public void setUserID(UserID id){userID = id;}
 }

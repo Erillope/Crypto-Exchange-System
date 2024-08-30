@@ -1,18 +1,25 @@
 package com.globant.infrastructure.fxml.controllers;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
+import com.globant.infrastructure.fxml.FxmlApp;
+import java.io.IOException;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 
 /**
  * FXML Controller class
  *
  * @author erillope
  */
-public class MainMenuController implements Initializable {
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+public class MainMenuController{
+
+    @FXML
+    private void depositeMoney(ActionEvent event) throws IOException {
+        FxmlApp.setRoot("depositeMoney");
+    }
+
+    @FXML
+    private void viewWalletBalance(ActionEvent event) throws IOException {
+        FxmlApp.setRoot("viewWalletBalance");
+    }
 
 }

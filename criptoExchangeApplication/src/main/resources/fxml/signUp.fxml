@@ -41,6 +41,11 @@
             <TextField fx:id="numberAccountField" />
          </children>
       </HBox>
-      <Button mnemonicParsing="false" onAction="#signUp" text="Sign Up" />
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#signUp" text="Sign Up" />
+            <Button mnemonicParsing="false" onAction="#returnMenu" text="Return" />
+         </children>
+      </HBox>
    </children>
 </VBox>

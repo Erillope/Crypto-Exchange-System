@@ -25,7 +25,7 @@ public abstract class SerRepository<K extends Serializable,V extends Serializabl
 
     @Override
     public V get(K key) throws KeyNotFoundException {
-        if (!contain(key)){throw KeyNotFoundException.keyNotFound();}
+        if (!contain(key)){throw throwNotFoundException();}
         return data.get(key);
     }
 
@@ -44,4 +44,6 @@ public abstract class SerRepository<K extends Serializable,V extends Serializabl
         try{Serializer.serialize(this, source);}
         catch(IOException e){throw RepositoryConnectionException.failedConnection();}
     }
+    
+    protected abstract KeyNotFoundException throwNotFoundException();
 }

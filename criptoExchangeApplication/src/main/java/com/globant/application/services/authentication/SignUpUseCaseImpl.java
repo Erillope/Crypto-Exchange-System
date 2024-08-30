@@ -4,6 +4,7 @@ import com.globant.application.dto.SignUpDTO;
 import com.globant.application.repositories.Repository;
 import com.globant.application.repositories.UserRepository;
 import com.globant.domain.crypto.Wallet;
+import com.globant.domain.crypto.WalletID;
 import com.globant.domain.exceptions.DomainException;
 import com.globant.domain.exceptions.UserAlreadyExistException;
 import com.globant.domain.factories.BankAccountFactory;
@@ -21,14 +22,16 @@ import com.globant.domain.user.UserAccount;
 public class SignUpUseCaseImpl implements SignUpUseCase{
     private final UserRepository userRepository;
     private final Repository<String, BankAccount> bankAccountRepository;
+    private final Repository<WalletID, Wallet> walletRepository;
     private final UserAccountFactory userAccountFactory;
     private final UserFactory userFactory;
     private final WalletFactory walletFactory;
     private final BankAccountFactory bankAccountFactory;
 
-    public SignUpUseCaseImpl(UserRepository userRepository, Repository<String, BankAccount> bankAccountRepository) {
+    public SignUpUseCaseImpl(UserRepository userRepository, Repository<String, BankAccount> bankAccountRepository, Repository<WalletID, Wallet> walletRepository) {
         this.userRepository = userRepository;
         this.bankAccountRepository = bankAccountRepository;
+        this.walletRepository = walletRepository;
         this.userAccountFactory = new UserAccountFactory();
         this.userFactory = new UserFactory();
         this.walletFactory = new WalletFactory();
@@ -48,6 +51,7 @@ public class SignUpUseCaseImpl implements SignUpUseCase{
         if (userRepository.containEmail(user.getUserAccount().getEmail()))
         {throw UserAlreadyExistException.alreadyExist();}
         userRepository.save(user.getUserID(), user);
+        walletRepository.save(wallet.getID(), wallet);
     }
     
     private void registerBankAccount(SignUpDTO dto) throws DomainException{

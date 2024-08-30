@@ -9,6 +9,9 @@ import com.globant.application.services.wallet.WalletService;
  * @author erillope
  */
 public interface ServiceBuilder {
+    
+    public Initializer buildInitializer();
+    
     public AuthenticationService buildAuthenticationService();
     
     public WalletService buildWalletService();

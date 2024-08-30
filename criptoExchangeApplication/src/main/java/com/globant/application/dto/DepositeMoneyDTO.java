@@ -9,15 +9,14 @@ import java.math.BigDecimal;
  */
 public class DepositeMoneyDTO {
     private final BigDecimal amount;
-    private UserID userID;
+    private final UserID userID;
     
-    public DepositeMoneyDTO(BigDecimal amount) {
+    public DepositeMoneyDTO(BigDecimal amount, UserID userID) {
         this.amount = amount;
+        this.userID = userID;
     }
     
     public BigDecimal getAmount(){return amount;}
     
     public UserID getUserID(){return userID;}
-    
-    public void setUserID(UserID id){userID = id;}
 }

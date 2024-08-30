@@ -1,5 +1,7 @@
 package com.globant.application.repositories;
 
+import com.globant.domain.exceptions.KeyNotFoundException;
+import com.globant.domain.exceptions.TransactionHistoryNotFoundException;
 import com.globant.domain.exchange.TransactionHistory;
 import com.globant.domain.user.UserID;
 import com.globant.domain.util.Serializer;
@@ -10,7 +12,7 @@ import com.globant.domain.util.Serializer;
  */
 public class TransactionHistorySerRepository extends SerRepository<UserID, TransactionHistory>{
     private static TransactionHistorySerRepository instance = null;
-    private final static String source = "src\\main\\resources\\com\\globant\\application\\serializables\\transactionHistoryRepo.ser";
+    private final static String source = "src\\main\\resources\\serializables\\transactionHistoryRepo.ser";
     
     public TransactionHistorySerRepository() {
         super(source);
@@ -21,6 +23,11 @@ public class TransactionHistorySerRepository extends SerRepository<UserID, Trans
         try{instance = (TransactionHistorySerRepository)Serializer.desSerialize(source);}
         catch(Exception e){instance = new TransactionHistorySerRepository();}
         return instance;
+    }
+
+    @Override
+    protected KeyNotFoundException throwNotFoundException() {
+        return TransactionHistoryNotFoundException.transactionHistoryNotFound();
     }
     
 }

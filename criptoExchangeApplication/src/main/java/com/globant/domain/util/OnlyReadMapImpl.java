@@ -1,6 +1,7 @@
 package com.globant.domain.util;
 
 import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -19,6 +20,9 @@ public class OnlyReadMapImpl<K,V> implements OnlyReadMap<K,V>{
     public V get(K key) {
         return map.get(key);
     }
-    
-    
+
+    @Override
+    public Set<Map.Entry<K,V>> entrySet() {
+        return map.entrySet();
+    }
 }

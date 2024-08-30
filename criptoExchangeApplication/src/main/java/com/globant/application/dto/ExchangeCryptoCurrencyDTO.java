@@ -11,19 +11,17 @@ import com.globant.domain.user.UserID;
 public class ExchangeCryptoCurrencyDTO {
     private final CryptoCurrencyName cryptoName;
     private final CryptoCurrency amount;
-    private UserID userID;
+    private final UserID userID;
 
-    public ExchangeCryptoCurrencyDTO(CryptoCurrencyName cryptoName, CryptoCurrency amount) {
+    public ExchangeCryptoCurrencyDTO(CryptoCurrencyName cryptoName, CryptoCurrency amount, UserID userID) {
         this.cryptoName = cryptoName;
         this.amount = amount;
+        this.userID = userID;
     }
 
     public CryptoCurrencyName getCryptoName(){return cryptoName;}
 
     public CryptoCurrency getAmount(){return amount;}
 
-    public UserID getUserID(){return userID;}
-    
-    public void setUserID(UserID id){userID = id;}
-    
+    public UserID getUserID(){return userID;}    
 }
