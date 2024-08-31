@@ -1,7 +1,6 @@
 package integrationTests;
 
-import com.globant.application.config.DefaultServiceBuilder;
-import com.globant.application.config.ServiceBuilder;
+import com.globant.application.config.*;
 import com.globant.application.dto.BalanceDTO;
 import com.globant.application.dto.DepositeMoneyDTO;
 import com.globant.application.dto.GetWalletBalanceDTO;
@@ -21,7 +20,6 @@ public class DepositeMoneyTest {
             AuthenticationService authenticationService = builder.buildAuthenticationService();
             WalletService walletService = builder.buildWalletService();
             authenticationService.signIn(new SignInDTO("erillope@gmail.com", "Erillope123"));
-            
             GetWalletBalanceDTO getWalletBalanceDTO = new GetWalletBalanceDTO(authenticationService.getSignedUserDTO().getId());
             BalanceDTO balanceDTO = walletService.getBalance(getWalletBalanceDTO);
             

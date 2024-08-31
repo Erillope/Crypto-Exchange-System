@@ -38,7 +38,7 @@ public class SignUpController implements Initializable {
     
     @FXML
     private void signUp(ActionEvent event) throws IOException{
-        SignUpDTO dto= new SignUpDTO(nameField.getText(), emailField.getText(), passwordField.getText(),
+        SignUpDTO dto = new SignUpDTO(nameField.getText(), emailField.getText(), passwordField.getText(),
                 numberAccountField.getText(),banckAccountChoice.getValue());
         try{
             FxmlApp.authenticationService.signUp(dto);

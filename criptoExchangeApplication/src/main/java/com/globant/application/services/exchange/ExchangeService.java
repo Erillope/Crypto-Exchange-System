@@ -1,5 +1,6 @@
 package com.globant.application.services.exchange;
 
+import com.globant.application.dto.AvailableCoinsDTO;
 import com.globant.application.dto.ExchangeCryptoCurrencyDTO;
 import com.globant.application.dto.PlaceBuyOrderDTO;
 import com.globant.application.dto.PlaceSaleOrderDTO;
@@ -23,6 +24,11 @@ public class ExchangeService implements ExchangeCryptoCurrencyUseCase, PlaceBuyO
     @Override
     public void exchange(ExchangeCryptoCurrencyDTO dto) throws DomainException{
         this.exchangeUseCase.exchange(dto);
+    }
+    
+    @Override
+    public AvailableCoinsDTO getAvailableCoins() throws DomainException {
+        return this.exchangeUseCase.getAvailableCoins();
     }
 
     @Override

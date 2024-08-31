@@ -1,5 +1,6 @@
 package com.globant.application.services.exchange;
 
+import com.globant.application.dto.AvailableCoinsDTO;
 import com.globant.application.dto.ExchangeCryptoCurrencyDTO;
 import com.globant.domain.exceptions.DomainException;
 
@@ -9,4 +10,6 @@ import com.globant.domain.exceptions.DomainException;
  */
 public interface ExchangeCryptoCurrencyUseCase {
     public void exchange(ExchangeCryptoCurrencyDTO dto) throws DomainException;
+    
+    public AvailableCoinsDTO getAvailableCoins() throws DomainException;
 }

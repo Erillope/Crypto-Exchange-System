@@ -60,21 +60,20 @@ public class DefaultServiceBuilder implements ServiceBuilder{
     public AuthenticationService buildAuthenticationService() {
         SignUpUseCase signUpUseCase = new SignUpUseCaseImpl(userRepository, bankAccountRepository, walletRepository);
         SignInUseCase signInUseCase = new SignInUseCaseImpl(userRepository);
-        return new AuthenticationService(signUpUseCase, signInUseCase, userRepository);
+        return new AuthenticationService(signUpUseCase, signInUseCase, userRepository, ApplicationCache.getInstance());
     }
 
     @Override
     public WalletService buildWalletService() {
-        DepositeMoneyUseCase depositeMoneyUseCase = new DepositeMoneyUseCaseImpl(userRepository, bankAccountRepository);
-        GetTransactionHistoryUseCase getTransactionHistoryUseCase = new GetTransactionHistoryUseCaseImpl(transactionHistoryRepository);
-        GetWalletBalanceUseCase getWalletBalanceUseCase = new GetWalletBalanceUseCaseImpl(userRepository, walletRepository, bankAccountRepository);
+        DepositeMoneyUseCase depositeMoneyUseCase = new DepositeMoneyUseCaseImpl(bankAccountRepository);
+        GetTransactionHistoryUseCase getTransactionHistoryUseCase = new GetTransactionHistoryUseCaseImpl();
+        GetWalletBalanceUseCase getWalletBalanceUseCase = new GetWalletBalanceUseCaseImpl();
         return new WalletService(depositeMoneyUseCase, getTransactionHistoryUseCase, getWalletBalanceUseCase);
     }
 
     @Override
     public ExchangeService buildExchangeService() {
-        ExchangeCryptoCurrencyUseCase exchangeCryptoCurrencyUseCase = new ExchangeCryptoCurrencyUseCaseImpl(userRepository, bankAccountRepository,
-        exchangeInstance, transactionExecuter, walletRepository);
+        ExchangeCryptoCurrencyUseCase exchangeCryptoCurrencyUseCase = new ExchangeCryptoCurrencyUseCaseImpl(bankAccountRepository, transactionExecuter, walletRepository, transactionHistoryRepository);
         PlaceBuyOrderUseCase placeBuyOrderUseCase = new PlaceBuyOrderUseCaseImpl(userRepository, walletRepository, bankAccountRepository,
         exchangeInstance, transactionHistoryRepository, transactionExecuter);
         PlaceSaleOrderUseCase placeSaleOrderUseCase = new PlaceSaleOrderUseCaseImpl(userRepository, walletRepository, bankAccountRepository,
@@ -86,5 +85,4 @@ public class DefaultServiceBuilder implements ServiceBuilder{
     public Initializer buildInitializer() {
         return new ExchangeInitializer(walletRepository, bankAccountRepository, exchangeInstance);
     }
-    
 }

@@ -5,7 +5,6 @@ import com.globant.application.config.DefaultServiceBuilder;
 import com.globant.application.config.ServiceBuilder;
 import com.globant.domain.exceptions.DomainException;
 import com.globant.infrastructure.fxml.FxmlApp;
-
 /**
  *
  * @author erillope

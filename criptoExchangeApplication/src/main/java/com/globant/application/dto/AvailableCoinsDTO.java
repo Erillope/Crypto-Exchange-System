@@ -1,18 +1,25 @@
 package com.globant.application.dto;
 
+import com.globant.domain.crypto.CryptoCurrency;
 import com.globant.domain.crypto.CryptoCurrencyName;
-import com.globant.domain.util.OnlyReadCollection;
+import com.globant.domain.util.OnlyReadMap;
+import java.math.BigDecimal;
 
 /**
  *
  * @author erillope
  */
 public class AvailableCoinsDTO {
-    private final OnlyReadCollection<CryptoCurrencyName> cryptoCurrencyNames;
+    private final OnlyReadMap<CryptoCurrencyName, CryptoCurrency> cryptoCurrency;
+    private final OnlyReadMap<CryptoCurrencyName, BigDecimal> prices;
     
-    public AvailableCoinsDTO(OnlyReadCollection<CryptoCurrencyName> cryptoCurrencyNames){
-        this.cryptoCurrencyNames = cryptoCurrencyNames;
+    public AvailableCoinsDTO(OnlyReadMap<CryptoCurrencyName, CryptoCurrency> cryptoCurrency, OnlyReadMap<CryptoCurrencyName, BigDecimal> prices){
+        this.cryptoCurrency = cryptoCurrency;
+        this.prices = prices;
     }
 
-    public OnlyReadCollection<CryptoCurrencyName> getCryptoCurrencyNames(){return cryptoCurrencyNames;}
+    public OnlyReadMap<CryptoCurrencyName, CryptoCurrency> getCryptoCurrency(){return cryptoCurrency;}
+    
+    public OnlyReadMap<CryptoCurrencyName, BigDecimal> getPrices(){return prices;}
+    
 }

@@ -38,7 +38,8 @@ public class SerExchangeInstance implements ExchangeInstance, Serializable{
     public static SerExchangeInstance getInstance(){
         if (instance != null){return instance;}
         try{instance = (SerExchangeInstance)Serializer.desSerialize(source);}
-        catch(Exception e){instance = new SerExchangeInstance();}
+        catch(Exception e){
+            instance = new SerExchangeInstance();}
         return instance;
     }
     

@@ -9,5 +9,7 @@
       <Label text="Main Menu" />
       <Button mnemonicParsing="false" onAction="#depositeMoney" text="Deposite Money" />
       <Button mnemonicParsing="false" onAction="#viewWalletBalance" text="View Wallet Balance" />
+      <Button mnemonicParsing="false" onAction="#buyFromExchange" text="Buy From Exchange" />
+      <Button mnemonicParsing="false" onAction="#viewTransactionHistory" text="View Transaction History" />
    </children>
 </VBox>
