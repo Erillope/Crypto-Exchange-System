@@ -1,17 +1,21 @@
 package com.globant.application.services.exchange;
 
+import com.globant.application.config.ApplicationCache;
+import com.globant.application.dto.AvailableCoinsDTO;
 import com.globant.application.dto.ExchangeCryptoCurrencyDTO;
-import com.globant.application.repositories.ExchangeInstance;
 import com.globant.application.repositories.Repository;
-import com.globant.application.repositories.UserRepository;
 import com.globant.application.services.wallet.BankTransactionExecuter;
+import com.globant.domain.crypto.CryptoCurrency;
 import com.globant.domain.crypto.Wallet;
 import com.globant.domain.crypto.WalletID;
 import com.globant.domain.exceptions.DomainException;
 import com.globant.domain.exceptions.InsufficientCurrencyException;
-import com.globant.domain.exchange.Exchange;
+import com.globant.domain.exchange.Transaction;
+import com.globant.domain.exchange.TransactionHistory;
+import com.globant.domain.exchange.TransactionType;
+import com.globant.domain.factories.CryptoCurrencyFactory;
 import com.globant.domain.user.BankAccount;
-import com.globant.domain.user.User;
+import com.globant.domain.user.UserID;
 import java.math.BigDecimal;
 
 /**
@@ -19,19 +23,20 @@ import java.math.BigDecimal;
  * @author erillope
  */
 public class ExchangeCryptoCurrencyUseCaseImpl implements ExchangeCryptoCurrencyUseCase{
-    private final UserRepository userRepository;
     private final Repository<String, BankAccount> bankAccountRepository;
-    private final ExchangeInstance exchangeInstance;
     private final BankTransactionExecuter transactionExecuter;
     private final Repository<WalletID, Wallet> walletRepository;
+    private final Repository<UserID, TransactionHistory> transactionHistoryRepository;
+    private final CryptoCurrencyFactory cryptoFactory;
+    private final ApplicationCache cache = ApplicationCache.getInstance();
 
-    public ExchangeCryptoCurrencyUseCaseImpl(UserRepository userRepository, Repository<String,
-            BankAccount> bankAccountRepository, ExchangeInstance exchangeInstance, BankTransactionExecuter transactionExecuter, Repository<WalletID, Wallet> walletRepository) {
-        this.userRepository = userRepository;
+    public ExchangeCryptoCurrencyUseCaseImpl(Repository<String, BankAccount> bankAccountRepository, BankTransactionExecuter transactionExecuter, 
+            Repository<WalletID, Wallet> walletRepository, Repository<UserID, TransactionHistory> transactionHistoryRepository) {
         this.bankAccountRepository = bankAccountRepository;
-        this.exchangeInstance = exchangeInstance;
         this.transactionExecuter = transactionExecuter;
         this.walletRepository = walletRepository;
+        this.transactionHistoryRepository = transactionHistoryRepository;
+        cryptoFactory = new CryptoCurrencyFactory();
     }
     
     @Override
@@ -39,35 +44,39 @@ public class ExchangeCryptoCurrencyUseCaseImpl implements ExchangeCryptoCurrency
         validateExchange(dto);
         exchangeCryptoCurrency(dto);
         executePayment(dto);
+        addTransaction(dto);
+    }
+    
+    @Override
+    public AvailableCoinsDTO getAvailableCoins() throws DomainException {
+        return new AvailableCoinsDTO(cache.exchangeWallet.getCryptos(), cache.exchange.getMarketPrices());
     }
     
     private void validateExchange(ExchangeCryptoCurrencyDTO dto) throws DomainException{
-        Exchange exchange = exchangeInstance.get();
-        Wallet exchangeWallet = walletRepository.get(exchange.getWalletID());
-        BigDecimal exchangeAmount = exchangeWallet.get(dto.getCryptoName()).getAmount();
-        if (dto.getAmount().getAmount().compareTo(exchangeAmount) > 0)
+        BigDecimal exchangeAmount = cache.exchangeWallet.get(dto.getCryptoName()).getAmount();
+        if (dto.getAmount().compareTo(exchangeAmount) > 0)
         {throw InsufficientCurrencyException.insufficientAmount();}
     }
     
-    private void exchangeCryptoCurrency(ExchangeCryptoCurrencyDTO dto)throws DomainException{
-        Exchange exchange = exchangeInstance.get();
-        User user = userRepository.get(dto.getUserID());
-        Wallet exchangeWallet = walletRepository.get(exchange.getWalletID());
-        Wallet userWallet = walletRepository.get(user.getWalletID());
-        exchangeWallet.reduceAmount(dto.getCryptoName(), dto.getAmount());
-        userWallet.addAmount(dto.getCryptoName(), dto.getAmount());
-        walletRepository.save(exchangeWallet.getID(), exchangeWallet);
-        walletRepository.save(userWallet.getID(), userWallet);
+    private void exchangeCryptoCurrency(ExchangeCryptoCurrencyDTO dto) throws DomainException{
+        CryptoCurrency amount = cryptoFactory.createCryptoCurrency(dto.getCryptoName(), dto.getAmount());
+        cache.exchangeWallet.reduceAmount(dto.getCryptoName(), amount);
+        cache.currentUserWallet.addAmount(dto.getCryptoName(), amount);
+        walletRepository.save(cache.exchangeWallet.getID(), cache.exchangeWallet);
+        walletRepository.save(cache.currentUserWallet.getID(), cache.currentUserWallet);
     }
     
-    private void executePayment(ExchangeCryptoCurrencyDTO dto)throws DomainException{
-        User user = userRepository.get(dto.getUserID());
-        Exchange exchange = exchangeInstance.get();
-        BankAccount userBankAccount = bankAccountRepository.get(user.getNumberAccount().getNumberAccount());
-        BankAccount exchangeBankAccount = bankAccountRepository.get(exchange.getNumberAccount().getNumberAccount());
-        BigDecimal totalAmount = dto.getAmount().getAmount().multiply(Exchange.getInitialPrice(dto.getCryptoName()));
-        transactionExecuter.execute(userBankAccount, exchangeBankAccount, totalAmount);
-        bankAccountRepository.save(userBankAccount.getNumberAccount().getNumberAccount(), userBankAccount);
-        bankAccountRepository.save(exchangeBankAccount.getNumberAccount().getNumberAccount(), exchangeBankAccount);
+    private void executePayment(ExchangeCryptoCurrencyDTO dto) throws DomainException{
+        BigDecimal totalAmount = dto.getAmount().multiply(cache.exchange.getPrice(dto.getCryptoName()));
+        transactionExecuter.execute(cache.currentUserBankAccount, cache.exchangeBankAccount, totalAmount);
+        bankAccountRepository.save(cache.currentUserBankAccount.getNumberAccount().getNumberAccount(), cache.currentUserBankAccount);
+        bankAccountRepository.save(cache.exchangeBankAccount.getNumberAccount().getNumberAccount(), cache.exchangeBankAccount);
+    }
+    
+    private void addTransaction(ExchangeCryptoCurrencyDTO dto) throws DomainException{
+        BigDecimal totalPrice = dto.getAmount().multiply(cache.exchange.getPrice(dto.getCryptoName()));
+        Transaction transaction = new Transaction(totalPrice, dto.getCryptoName(), dto.getUserID(), TransactionType.BUY);
+        cache.currentUserTransactionHistory.addTransaction(transaction);
+        transactionHistoryRepository.save(dto.getUserID(), cache.currentUserTransactionHistory);
     }
 }

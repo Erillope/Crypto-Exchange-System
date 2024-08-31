@@ -1,5 +1,6 @@
 package com.globant.application.services.authentication;
 
+import com.globant.application.config.ApplicationCache;
 import com.globant.application.dto.SignInDTO;
 import com.globant.application.dto.SignUpDTO;
 import com.globant.application.dto.UserDTO;
@@ -16,11 +17,13 @@ public class AuthenticationService implements SignUpUseCase, SignInUseCase, Sign
     private final SignUpUseCase signUpUserCase;
     private final SignInUseCase signInUserCase;
     private final UserRepository userRepository;
+    private final ApplicationCache cache;
 
-    public AuthenticationService(SignUpUseCase signUpUserCase, SignInUseCase signInUserCase, UserRepository userRepository) {
+    public AuthenticationService(SignUpUseCase signUpUserCase, SignInUseCase signInUserCase, UserRepository userRepository, ApplicationCache cache) {
         this.signUpUserCase = signUpUserCase;
         this.signInUserCase = signInUserCase;
         this.userRepository = userRepository;
+        this.cache = cache;
     }
     
     public UserDTO getSignedUserDTO(){return signedUserDTO;}
@@ -36,10 +39,12 @@ public class AuthenticationService implements SignUpUseCase, SignInUseCase, Sign
         User signedUser = userRepository.getByEmail(dto.getEmail());
         signedUserDTO = new UserDTO(signedUser.getNumberAccount().getNumberAccount(), signedUser.getUserID(), signedUser.getWalletID(),
         signedUser.getUserAccount().getName(), signedUser.getUserAccount().getEmail());
+        cache.init(signedUser.getUserID());
     }
 
     @Override
     public void signOut() {
         signedUserDTO = null;
+        cache.clear();
     }
 }

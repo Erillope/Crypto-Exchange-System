@@ -74,8 +74,8 @@ public class PlaceBuyOrderUseCaseImpl implements PlaceBuyOrderUseCase{
     private void generateTransaction(User payer, User beneficiary, SalesOrder order) throws DomainException{
         TransactionHistory payerHistory = transactionHistoryRepository.get(payer.getUserID());
         TransactionHistory beneficiaryHistory = transactionHistoryRepository.get(beneficiary.getUserID());
-        payerHistory.addTransaction(new Transaction(order, TransactionType.BUY));
-        beneficiaryHistory.addTransaction(new Transaction(order, TransactionType.SELL));
+        //payerHistory.addTransaction(new Transaction(order, TransactionType.BUY));
+        //beneficiaryHistory.addTransaction(new Transaction(order, TransactionType.SELL));
         transactionHistoryRepository.save(payer.getUserID(), payerHistory);
         transactionHistoryRepository.save(beneficiary.getUserID(), beneficiaryHistory);
     }

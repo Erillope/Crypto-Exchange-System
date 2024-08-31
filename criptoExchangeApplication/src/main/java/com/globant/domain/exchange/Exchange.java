@@ -10,6 +10,9 @@ import com.globant.domain.exceptions.InvalidNumberAccountException;
 import com.globant.domain.user.NumberAccount;
 import com.globant.domain.util.OnlyReadCollection;
 import com.globant.domain.util.OnlyReadCollectionImpl;
+import com.globant.domain.util.OnlyReadMap;
+import com.globant.domain.util.OnlyReadMapImpl;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -19,19 +22,11 @@ import java.util.stream.Collectors;
  *
  * @author erillope
  */
-public class Exchange {
+public class Exchange implements Serializable{
     private static Exchange instance = null;
-    private final static Map<CryptoCurrencyName, BigDecimal> initialPrices;
-    static {
-        initialPrices = new HashMap<>();
-        initialPrices.put(CryptoCurrencyName.BITCOIN, new BigDecimal("10"));
-        initialPrices.put(CryptoCurrencyName.ETHEREUM, new BigDecimal("5"));
-        initialPrices.put(CryptoCurrencyName.RIPPLE, new BigDecimal("3"));
-    }
-    
     private NumberAccount numberAccount;
     private WalletID walletID;
-    private Map<CryptoCurrencyName, BigDecimal> marketPrices;
+    private final Map<CryptoCurrencyName, BigDecimal> marketPrices;
     private final List<BuyOrder> buyOrderBook;
     private final List<SalesOrder> salesOrderBook;
     
@@ -82,6 +77,9 @@ public class Exchange {
     
     public void addPrice(CryptoCurrencyName cryptoName, BigDecimal price){marketPrices.put(cryptoName, price);}
     
+    public OnlyReadMap<CryptoCurrencyName, BigDecimal> getMarketPrices()
+    {return new OnlyReadMapImpl<>(marketPrices);}
+    
     public NumberAccount getNumberAccount(){return numberAccount;}
     
     public WalletID getWalletID(){return walletID;}
@@ -92,6 +90,4 @@ public class Exchange {
         if (instance != null){return instance;}
         return new Exchange();
     }
-    
-    public static BigDecimal getInitialPrice(CryptoCurrencyName cryptoName){return initialPrices.get(cryptoName);}
- }
+}

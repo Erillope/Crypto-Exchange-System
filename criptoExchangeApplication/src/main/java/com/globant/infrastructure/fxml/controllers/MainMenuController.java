@@ -22,4 +22,14 @@ public class MainMenuController{
         FxmlApp.setRoot("viewWalletBalance");
     }
 
+    @FXML
+    private void buyFromExchange(ActionEvent event) throws IOException {
+        FxmlApp.setRoot("buyFromExchange");
+    }
+
+    @FXML
+    private void viewTransactionHistory(ActionEvent event) throws IOException {
+        FxmlApp.setRoot("viewTransactionHistory");
+    }
+
 }

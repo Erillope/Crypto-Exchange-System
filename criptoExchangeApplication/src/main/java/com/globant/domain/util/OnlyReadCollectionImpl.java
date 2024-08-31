@@ -27,5 +27,10 @@ public class OnlyReadCollectionImpl<T> implements OnlyReadCollection<T>{
     public int size() {
         return collection.size();
     }
+
+    @Override
+    public String toString() {
+        return collection.toString();
+    }
     
 }
