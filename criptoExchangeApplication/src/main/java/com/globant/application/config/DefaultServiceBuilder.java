@@ -16,10 +16,7 @@ import com.globant.application.services.authentication.SignUpUseCaseImpl;
 import com.globant.application.services.exchange.ExchangeCryptoCurrencyUseCase;
 import com.globant.application.services.exchange.ExchangeCryptoCurrencyUseCaseImpl;
 import com.globant.application.services.exchange.ExchangeService;
-import com.globant.application.services.exchange.PlaceBuyOrderUseCase;
-import com.globant.application.services.exchange.PlaceBuyOrderUseCaseImpl;
-import com.globant.application.services.exchange.PlaceSaleOrderUseCase;
-import com.globant.application.services.exchange.PlaceSaleOrderUseCaseImpl;
+import com.globant.application.services.exchange.PlaceOrderUseCaseImpl;
 import com.globant.application.services.wallet.BankTransactionExecuter;
 import com.globant.application.services.wallet.BankTransactionExecuterImpl;
 import com.globant.application.services.wallet.DepositeMoneyUseCase;
@@ -34,6 +31,7 @@ import com.globant.domain.crypto.WalletID;
 import com.globant.domain.exchange.TransactionHistory;
 import com.globant.domain.user.BankAccount;
 import com.globant.domain.user.UserID;
+import com.globant.application.services.exchange.PlaceOrderUseCase;
 
 /**
  *
@@ -74,11 +72,9 @@ public class DefaultServiceBuilder implements ServiceBuilder{
     @Override
     public ExchangeService buildExchangeService() {
         ExchangeCryptoCurrencyUseCase exchangeCryptoCurrencyUseCase = new ExchangeCryptoCurrencyUseCaseImpl(bankAccountRepository, transactionExecuter, walletRepository, transactionHistoryRepository);
-        PlaceBuyOrderUseCase placeBuyOrderUseCase = new PlaceBuyOrderUseCaseImpl(userRepository, walletRepository, bankAccountRepository,
+        PlaceOrderUseCase placeOrderUseCase = new PlaceOrderUseCaseImpl(userRepository, walletRepository, bankAccountRepository,
         exchangeInstance, transactionHistoryRepository, transactionExecuter);
-        PlaceSaleOrderUseCase placeSaleOrderUseCase = new PlaceSaleOrderUseCaseImpl(userRepository, walletRepository, bankAccountRepository,
-        exchangeInstance, transactionHistoryRepository, transactionExecuter);
-        return new ExchangeService(exchangeCryptoCurrencyUseCase, placeBuyOrderUseCase, placeSaleOrderUseCase);
+        return new ExchangeService(exchangeCryptoCurrencyUseCase, placeOrderUseCase);
     }
 
     @Override

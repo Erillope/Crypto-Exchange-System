@@ -10,6 +10,7 @@ import com.globant.domain.crypto.Wallet;
 import com.globant.domain.crypto.WalletID;
 import com.globant.domain.exceptions.DomainException;
 import com.globant.domain.exceptions.InsufficientCurrencyException;
+import com.globant.domain.exceptions.InsufficientMoneyException;
 import com.globant.domain.exchange.Transaction;
 import com.globant.domain.exchange.TransactionHistory;
 import com.globant.domain.exchange.TransactionType;
@@ -54,8 +55,11 @@ public class ExchangeCryptoCurrencyUseCaseImpl implements ExchangeCryptoCurrency
     
     private void validateExchange(ExchangeCryptoCurrencyDTO dto) throws DomainException{
         BigDecimal exchangeAmount = cache.exchangeWallet.get(dto.getCryptoName()).getAmount();
-        if (dto.getAmount().compareTo(exchangeAmount) > 0)
-        {throw InsufficientCurrencyException.insufficientAmount();}
+        BigDecimal totalAmount = dto.getAmount().multiply(cache.exchange.getPrice(dto.getCryptoName()));
+        boolean isEnoughMoney = cache.currentUserBankAccount.getMoney().compareTo(totalAmount) > 0;
+        boolean isEnoughCryptoCurrency = exchangeAmount.compareTo(dto.getAmount()) > 0;
+        if (!isEnoughMoney){throw InsufficientCurrencyException.insufficientAmount();}
+        if (!isEnoughCryptoCurrency){throw InsufficientMoneyException.insufficientMoney();}
     }
     
     private void exchangeCryptoCurrency(ExchangeCryptoCurrencyDTO dto) throws DomainException{

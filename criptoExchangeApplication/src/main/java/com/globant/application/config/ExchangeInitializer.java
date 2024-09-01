@@ -38,7 +38,7 @@ public class ExchangeInitializer implements Initializer{
     @Override
     public void init() throws DomainException{
         Preferences prefs = Preferences.userNodeForPackage(ExchangeInitializer.class);
-        //prefs.putBoolean("FirstExecution", true);
+        prefs.putBoolean("FirstExecution", true);
         if (prefs.getBoolean("FirstExecution", true)){
             initExchange();
             prefs.putBoolean("FirstExecution", false);
@@ -49,7 +49,7 @@ public class ExchangeInitializer implements Initializer{
         Exchange exchange = exchangeInstance.get();
         Wallet exchangeWallet = walletFactory.createWallet();
         exchange.addPrice(CryptoCurrencyName.BITCOIN, BigDecimal.TEN);
-        exchangeWallet.addAmount(CryptoCurrencyName.BITCOIN, new Bitcoin(BigDecimal.TEN));
+        exchangeWallet.addAmount(CryptoCurrencyName.BITCOIN, new Bitcoin(new BigDecimal("100")));
         BankAccount exchangeBankAccount = bankAccountFactory.createAccount(BankName.PACIFICO, exchange.getNumberAccount().getNumberAccount());
         exchange.setWalletID(exchangeWallet.getID());
         walletRepository.save(exchange.getWalletID(), exchangeWallet);

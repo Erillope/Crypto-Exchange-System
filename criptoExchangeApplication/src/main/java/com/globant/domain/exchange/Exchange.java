@@ -27,8 +27,8 @@ public class Exchange implements Serializable{
     private NumberAccount numberAccount;
     private WalletID walletID;
     private final Map<CryptoCurrencyName, BigDecimal> marketPrices;
-    private final List<BuyOrder> buyOrderBook;
-    private final List<SalesOrder> salesOrderBook;
+    public final List<BuyOrder> buyOrderBook;
+    public final List<SalesOrder> salesOrderBook;
     
     private Exchange(){
         try{numberAccount = new NumberAccount("6578435789");}
@@ -41,16 +41,17 @@ public class Exchange implements Serializable{
     
     public OnlyReadCollection<SalesOrder> searchSalesOrder(BuyOrder buyOrder){
         List<SalesOrder> orders = salesOrderBook.stream().
-                filter(o -> o.getMinPrice().compareTo(buyOrder.getMaxPrice()) <= 0).
+                filter(o -> o.getMinPrice().compareTo(buyOrder.getMaxPrice()) <= 0 
+                        && o.getCryptoName() == buyOrder.getCryptoName() && !o.getUserID().equals(buyOrder.getUserID())).
                 collect(Collectors.toList());
         orders.sort(Comparator.comparing(SalesOrder::getMinPrice));
         List<SalesOrder> selectedOrders = new ArrayList<>();
         BigDecimal amount = BigDecimal.ZERO;
         for (SalesOrder order: orders){
-            if (amount.compareTo(buyOrder.getAmount().getAmount()) > 0){
+            if (amount.compareTo(buyOrder.getRemainigAmount()) > 0){
                 return new OnlyReadCollectionImpl(selectedOrders);
             }
-            amount.add(buyOrder.getAmount().getAmount());
+            amount = amount.add(order.getRemainigAmount());
             selectedOrders.add(order);
         }
         return new OnlyReadCollectionImpl(new ArrayList<>());
