@@ -14,6 +14,7 @@ import com.globant.domain.crypto.CryptoCurrencyName;
 import com.globant.domain.crypto.Wallet;
 import com.globant.domain.crypto.WalletID;
 import com.globant.domain.exceptions.DomainException;
+import com.globant.domain.exceptions.InsufficientCurrencyException;
 import com.globant.domain.exceptions.InsufficientMoneyException;
 import com.globant.domain.exceptions.NotFoundBuyOrderException;
 import com.globant.domain.exchange.BuyOrder;
@@ -56,15 +57,30 @@ public class PlaceOrderUseCaseImpl implements PlaceOrderUseCase{
     
     @Override
     public void placeSaleOrder(PlaceSaleOrderDTO dto) throws DomainException {
+        if (cache.currentUserWallet.get(dto.getCryptoName()).getAmount().compareTo(dto.getAmount()) < 0)
+        {throw InsufficientCurrencyException.insufficientAmount();}
         CryptoCurrency amount = cryptoCurrencyFactory.createCryptoCurrency(dto.getCryptoName(), dto.getAmount());
-        cache.exchange.salesOrderBook.add(new SalesOrder(amount, dto.getCryptoName(), dto.getUserID(), dto.getMinPrice()));
-        exchangeInstance.save(cache.exchange);
-        /*SalesOrder salesOrder = cache.currentUser.generateSalesOrder(dto.getAmount(), dto.getCryptoName(), dto.getMinPrice());
+        SalesOrder salesOrder = new SalesOrder(amount, dto.getCryptoName(), dto.getUserID(), dto.getMinPrice());
         OnlyReadCollection<BuyOrder> buyOrders = cache.exchange.searchBuyOrder(salesOrder);
-        if (buyOrders.isEmpty()){throw NotFoundBuyOrderException.notFound();}
-        for (int i = 0; i < buyOrders.size(); i++){
-            trade(cache.currentUser, buyOrders.get(i));
-        }*/
+        if (buyOrders.isEmpty()){
+            cache.exchange.salesOrderBook.add(salesOrder);
+            //exchangeInstance.save(cache.exchange);
+            return;
+        }
+        for (int i = 0; i<buyOrders.size(); i++){
+            User payer = userRepository.get(buyOrders.get(i).getUserID());
+            BigDecimal unitPrice = salesOrder.getMinPrice().add(buyOrders.get(i).getMaxPrice()).divide(new BigDecimal("2"));
+            trade( cache.currentUser, payer, buyOrders.get(i), unitPrice, salesOrder.getRemainigAmount());
+            BigDecimal remainigAmount = buyOrders.get(i).getRemainigAmount();
+            buyOrders.get(i).exchange(salesOrder.getRemainigAmount());
+            salesOrder.exchange(remainigAmount);
+            if (buyOrders.get(i).isCompleted()){
+                generateTransaction(payer, buyOrders.get(i), TransactionType.BUY);
+                cache.exchange.buyOrderBook.remove(buyOrders.get(i));
+            }
+        }
+        generateTransaction(cache.currentUser, salesOrder, TransactionType.SELL);
+        //exchangeInstance.save(cache.exchange);
     }
     
     @Override

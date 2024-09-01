@@ -59,16 +59,18 @@ public class Exchange implements Serializable{
     
     public OnlyReadCollection<BuyOrder> searchBuyOrder(SalesOrder salesOrder){
         List<BuyOrder> orders = buyOrderBook.stream().
-                filter(o -> o.getMaxPrice().compareTo(salesOrder.getMinPrice()) >= 0).
+                filter(o -> o.getMaxPrice().compareTo(salesOrder.getMinPrice()) >= 0 
+                        && o.getCryptoName() == salesOrder.getCryptoName() && !o.getUserID().equals(salesOrder.getUserID())).
                 collect(Collectors.toList());
+        System.out.println("orders sin ordenar");
         orders.sort(Comparator.comparing(BuyOrder::getMaxPrice).reversed());
         List<BuyOrder> selectedOrders = new ArrayList<>();
         BigDecimal amount = BigDecimal.ZERO;
         for (BuyOrder order: orders){
-            if (amount.compareTo(salesOrder.getAmount().getAmount()) > 0){
+            if (amount.compareTo(salesOrder.getRemainigAmount()) > 0){
                 return new OnlyReadCollectionImpl(selectedOrders);
             }
-            amount.add(salesOrder.getAmount().getAmount());
+            amount = amount.add(order.getRemainigAmount());
             selectedOrders.add(order);
         }
         return new OnlyReadCollectionImpl(new ArrayList<>());
