@@ -57,7 +57,7 @@ public class BuyFromExchangeController implements Initializable{
     @FXML
     private void buy(ActionEvent event) {
         try{
-            ExchangeCryptoCurrencyDTO dto = new ExchangeCryptoCurrencyDTO(this.cryptoName, new BigDecimal(amountField.getText()),
+            ExchangeCryptoCurrencyDTO dto = new ExchangeCryptoCurrencyDTO(this.cryptoName, new BigDecimal(amountField.getText().trim()),
             FxmlApp.authenticationService.getSignedUserDTO().getId());
             try{
                 FxmlApp.exchangeService.exchange(dto);

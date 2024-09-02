@@ -1,7 +1,6 @@
 package com.globant.application.services.exchange;
 
 import com.globant.application.config.ApplicationCache;
-import com.globant.application.config.Cache;
 import com.globant.application.dto.PlaceBuyOrderDTO;
 import com.globant.application.dto.PlaceSaleOrderDTO;
 import com.globant.application.repositories.ExchangeInstance;
@@ -16,9 +15,8 @@ import com.globant.domain.crypto.WalletID;
 import com.globant.domain.exceptions.DomainException;
 import com.globant.domain.exceptions.InsufficientCurrencyException;
 import com.globant.domain.exceptions.InsufficientMoneyException;
-import com.globant.domain.exceptions.NotFoundBuyOrderException;
+import com.globant.domain.exceptions.InvalidAmountException;
 import com.globant.domain.exchange.BuyOrder;
-import com.globant.domain.exchange.Exchange;
 import com.globant.domain.exchange.Order;
 import com.globant.domain.exchange.SalesOrder;
 import com.globant.domain.exchange.Transaction;
@@ -57,34 +55,41 @@ public class PlaceOrderUseCaseImpl implements PlaceOrderUseCase{
     
     @Override
     public void placeSaleOrder(PlaceSaleOrderDTO dto) throws DomainException {
+        if (dto.getAmount().signum() <= 0 || dto.getMinPrice().signum() <= 0){throw InvalidAmountException.invalidAmount();}
         if (cache.currentUserWallet.get(dto.getCryptoName()).getAmount().compareTo(dto.getAmount()) < 0)
         {throw InsufficientCurrencyException.insufficientAmount();}
         CryptoCurrency amount = cryptoCurrencyFactory.createCryptoCurrency(dto.getCryptoName(), dto.getAmount());
+      
         SalesOrder salesOrder = new SalesOrder(amount, dto.getCryptoName(), dto.getUserID(), dto.getMinPrice());
         OnlyReadCollection<BuyOrder> buyOrders = cache.exchange.searchBuyOrder(salesOrder);
         if (buyOrders.isEmpty()){
             cache.exchange.salesOrderBook.add(salesOrder);
-            //exchangeInstance.save(cache.exchange);
+            exchangeInstance.save(cache.exchange);
+            cache.currentUserWallet.reduceAmount(dto.getCryptoName(), amount);
+            walletRepository.save(cache.currentUserWallet.getID(), cache.currentUserWallet);
             return;
         }
         for (int i = 0; i<buyOrders.size(); i++){
             User payer = userRepository.get(buyOrders.get(i).getUserID());
-            BigDecimal unitPrice = salesOrder.getMinPrice().add(buyOrders.get(i).getMaxPrice()).divide(new BigDecimal("2"));
-            trade( cache.currentUser, payer, buyOrders.get(i), unitPrice, salesOrder.getRemainigAmount());
+            tradeS(buyOrders.get(i), salesOrder);
             BigDecimal remainigAmount = buyOrders.get(i).getRemainigAmount();
             buyOrders.get(i).exchange(salesOrder.getRemainigAmount());
             salesOrder.exchange(remainigAmount);
             if (buyOrders.get(i).isCompleted()){
+                BankAccount payerBankAccount = bankRepository.get(payer.getNumberAccount().getNumberAccount());
+                payerBankAccount.add(buyOrders.get(i).getExchangedMoney());
+                bankRepository.save(payerBankAccount.getNumberAccount().getNumberAccount(), payerBankAccount);
                 generateTransaction(payer, buyOrders.get(i), TransactionType.BUY);
                 cache.exchange.buyOrderBook.remove(buyOrders.get(i));
             }
         }
         generateTransaction(cache.currentUser, salesOrder, TransactionType.SELL);
-        //exchangeInstance.save(cache.exchange);
+        exchangeInstance.save(cache.exchange);
     }
     
     @Override
     public void placeBuyOrder(PlaceBuyOrderDTO dto) throws DomainException {
+        if (dto.getAmount().signum() <= 0 || dto.getMaxPrice().signum() <= 0){throw InvalidAmountException.invalidAmount();}
         BigDecimal maxTotalPrice = dto.getAmount().multiply(dto.getMaxPrice());
         if (cache.currentUserBankAccount.getMoney().compareTo(maxTotalPrice) < 0){throw InsufficientMoneyException.insufficientMoney();}
         CryptoCurrency amount = cryptoCurrencyFactory.createCryptoCurrency(dto.getCryptoName(), dto.getAmount());
@@ -92,40 +97,68 @@ public class PlaceOrderUseCaseImpl implements PlaceOrderUseCase{
         OnlyReadCollection<SalesOrder> salesOrder = cache.exchange.searchSalesOrder(buyOrder);
         if (salesOrder.isEmpty()){
             cache.exchange.buyOrderBook.add(buyOrder);
-            //exchangeInstance.save(cache.exchange);
+            exchangeInstance.save(cache.exchange);
+            cache.currentUserBankAccount.reduce(maxTotalPrice);
+            bankRepository.save(cache.currentUserBankAccount.getNumberAccount().getNumberAccount(), cache.currentUserBankAccount);
             return;
         }
         for (int i = 0; i<salesOrder.size(); i++){
-            User beneficiary = userRepository.get(salesOrder.get(i).getUserID());
-            BigDecimal unitPrice = buyOrder.getMaxPrice().add(salesOrder.get(i).getMinPrice()).divide(new BigDecimal("2"));
-            trade(beneficiary, cache.currentUser, salesOrder.get(i), unitPrice, buyOrder.getRemainigAmount());
+            User beneficiary = userRepository.get(salesOrder.get(i).getUserID());            
+            tradeB(salesOrder.get(i), buyOrder);
             BigDecimal remainigAmount = salesOrder.get(i).getRemainigAmount();
             salesOrder.get(i).exchange(buyOrder.getRemainigAmount());
             buyOrder.exchange(remainigAmount);
             if (salesOrder.get(i).isCompleted()){
+                BankAccount beneficiaryBankAccount = bankRepository.get(beneficiary.getNumberAccount().getNumberAccount());
+                beneficiaryBankAccount.add(salesOrder.get(i).getExchangedMoney());
+                bankRepository.save(beneficiaryBankAccount.getNumberAccount().getNumberAccount(), beneficiaryBankAccount);
                 generateTransaction(beneficiary, salesOrder.get(i), TransactionType.SELL);
                 cache.exchange.salesOrderBook.remove(salesOrder.get(i));
             }
         }
         generateTransaction(cache.currentUser, buyOrder, TransactionType.BUY);
-        //exchangeInstance.save(cache.exchange);
+        exchangeInstance.save(cache.exchange);
     }
     
-    private void trade(User beneficiary, User payer, Order order, BigDecimal unitPrice, BigDecimal maxTake) throws DomainException{
-        Wallet beneficiaryWallet = walletRepository.get(beneficiary.getWalletID());
-        Wallet payerWallet = walletRepository.get(payer.getWalletID());
-        BankAccount beneficiaryBankAccount = bankRepository.get(beneficiary.getNumberAccount().getNumberAccount());
-        BankAccount payerBankAccount = bankRepository.get(payer.getNumberAccount().getNumberAccount());
-        payerWallet.addAmount(CryptoCurrencyName.BITCOIN, new Bitcoin(new BigDecimal("20")));//borrar
-        payerWallet.reduceAmount(order.getCryptoName(), order.getAmount());
-        beneficiaryWallet.addAmount(order.getCryptoName(), order.getAmount());
-        BigDecimal totalPrice = order.getAmount().getAmount().multiply(unitPrice);
-        if (order.getAmount().getAmount().compareTo(maxTake) > 0){totalPrice = maxTake.multiply(unitPrice);}
-        transactionExecuter.execute(payerBankAccount, beneficiaryBankAccount, totalPrice);
-        //walletRepository.save(payerWallet.getID(), payerWallet);
-        //walletRepository.save(beneficiaryWallet.getID(), beneficiaryWallet);
-        //bankRepository.save(payerBankAccount.getNumberAccount().getNumberAccount(), payerBankAccount);
-        //bankRepository.save(beneficiaryBankAccount.getNumberAccount().getNumberAccount(), beneficiaryBankAccount);
+    private void tradeB(SalesOrder salesOrder, BuyOrder buyOrder) throws DomainException{
+        BigDecimal unitPrice = buyOrder.getMaxPrice().add(salesOrder.getMinPrice()).divide(new BigDecimal("2"));
+        
+        BigDecimal totalPrice = salesOrder.getRemainigAmount().multiply(unitPrice);
+        if (salesOrder.getRemainigAmount().compareTo(buyOrder.getRemainigAmount()) > 0){
+            totalPrice = buyOrder.getRemainigAmount().multiply(unitPrice);
+            CryptoCurrency amount = cryptoCurrencyFactory.createCryptoCurrency(salesOrder.getCryptoName(), buyOrder.getRemainigAmount());
+            cache.currentUserWallet.addAmount(salesOrder.getCryptoName(), amount);
+        }
+        else{
+            CryptoCurrency amount = cryptoCurrencyFactory.createCryptoCurrency(salesOrder.getCryptoName(), salesOrder.getRemainigAmount());
+            cache.currentUserWallet.addAmount(salesOrder.getCryptoName(), amount);
+        }
+        buyOrder.exchangeMoney(totalPrice);
+        salesOrder.exchangeMoney(totalPrice);
+        cache.exchange.updatePrice(salesOrder.getCryptoName(), unitPrice);
+        cache.currentUserBankAccount.reduce(totalPrice);
+        walletRepository.save(cache.currentUserWallet.getID(), cache.currentUserWallet);
+        bankRepository.save(cache.currentUserBankAccount.getNumberAccount().getNumberAccount(), cache.currentUserBankAccount);
+    }
+    
+    private void tradeS(BuyOrder buyOrder, SalesOrder salesOrder) throws DomainException{
+        BigDecimal unitPrice = buyOrder.getMaxPrice().add(salesOrder.getMinPrice()).divide(new BigDecimal("2"));
+        BigDecimal totalPrice = buyOrder.getRemainigAmount().multiply(unitPrice);
+        if (buyOrder.getRemainigAmount().compareTo(salesOrder.getRemainigAmount()) > 0){
+            totalPrice = salesOrder.getRemainigAmount().multiply(unitPrice);
+            CryptoCurrency amount = cryptoCurrencyFactory.createCryptoCurrency(buyOrder.getCryptoName(), salesOrder.getRemainigAmount());
+            cache.currentUserWallet.reduceAmount(buyOrder.getCryptoName(), amount);
+        }
+        else{
+            CryptoCurrency amount = cryptoCurrencyFactory.createCryptoCurrency(buyOrder.getCryptoName(), buyOrder.getRemainigAmount());
+            cache.currentUserWallet.reduceAmount(buyOrder.getCryptoName(), amount);
+        }
+        buyOrder.exchangeMoney(totalPrice);
+        salesOrder.exchangeMoney(totalPrice);
+        cache.exchange.updatePrice(salesOrder.getCryptoName(), unitPrice);
+        cache.currentUserBankAccount.add(totalPrice);
+        walletRepository.save(cache.currentUserWallet.getID(), cache.currentUserWallet);
+        bankRepository.save(cache.currentUserBankAccount.getNumberAccount().getNumberAccount(), cache.currentUserBankAccount);
     }
     
     private void generateTransaction(User user, Order order, TransactionType type) throws DomainException{
@@ -135,7 +168,7 @@ public class PlaceOrderUseCaseImpl implements PlaceOrderUseCase{
         }
         else{userHistory = new TransactionHistory(user.getUserID());}
        
-        userHistory.addTransaction(new Transaction(order.getAmount().getAmount(), order.getCryptoName(), order.getUserID(), type));
-        //transactionHistoryRepository.save(user.getUserID(), userHistory);
+        userHistory.addTransaction(new Transaction(order.getExchangedMoney(), order.getAmount().getAmount(),order.getCryptoName(), user.getUserID(), type));
+        transactionHistoryRepository.save(user.getUserID(), userHistory);
     }
 }

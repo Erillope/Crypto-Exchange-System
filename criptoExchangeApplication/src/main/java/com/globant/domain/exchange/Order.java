@@ -16,12 +16,14 @@ public abstract class Order implements Serializable{
     private final CryptoCurrencyName cryptoName;
     private final UserID userID;
     private BigDecimal exchangedAmount;
+    private BigDecimal exchangedMoney;
     
     public Order(CryptoCurrency amount, CryptoCurrencyName cryptoName, UserID userID){
         this.amount = amount;
         this.cryptoName = cryptoName;
         this.userID = userID;
         this.exchangedAmount = BigDecimal.ZERO;
+        this.exchangedMoney = BigDecimal.ZERO;
     }
         
     public CryptoCurrency getAmount(){return amount;}
@@ -32,10 +34,14 @@ public abstract class Order implements Serializable{
     
     public BigDecimal getRemainigAmount(){return amount.getAmount().subtract(exchangedAmount);}
     
+    public BigDecimal getExchangedMoney(){return exchangedMoney;}
+    
     public void exchange(BigDecimal amount){
         if (amount.compareTo(getRemainigAmount()) >= 0){exchangedAmount = exchangedAmount.add(getRemainigAmount());}
         else{exchangedAmount = exchangedAmount.add(amount);}
     }
+    
+    public void exchangeMoney(BigDecimal money){this.exchangedMoney = this.exchangedMoney.add(money);}
     
     public boolean isCompleted(){return getRemainigAmount().compareTo(BigDecimal.ZERO) == 0;}
 }

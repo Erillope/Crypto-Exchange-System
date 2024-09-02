@@ -1,6 +1,5 @@
 package com.globant.application.dto;
 
-import com.globant.domain.crypto.CryptoCurrency;
 import java.math.BigDecimal;
 import com.globant.domain.crypto.CryptoCurrencyName;
 import com.globant.domain.user.UserID;

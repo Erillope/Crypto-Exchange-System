@@ -1,6 +1,5 @@
 package com.globant.domain.exchange;
 
-import com.globant.domain.exceptions.InvalidAmountException;
 import java.math.BigDecimal;
 import com.globant.domain.crypto.CryptoCurrency;
 import com.globant.domain.crypto.CryptoCurrencyName;

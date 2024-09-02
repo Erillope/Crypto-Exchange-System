@@ -1,6 +1,7 @@
 package com.globant.domain.crypto;
 
 import com.globant.domain.exceptions.InsufficientCurrencyException;
+import com.globant.domain.exceptions.InvalidAmountException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -16,7 +17,8 @@ public abstract class CryptoCurrency<T extends CryptoCurrency<T>> implements Ser
         amount = BigDecimal.ZERO;
     }
     
-    public CryptoCurrency(BigDecimal amount){
+    public CryptoCurrency(BigDecimal amount) throws InvalidAmountException{
+        if (amount.signum() < 0){throw InvalidAmountException.invalidAmount();}
         this.amount = amount;
     }
     

@@ -72,8 +72,8 @@ public class DefaultServiceBuilder implements ServiceBuilder{
     @Override
     public ExchangeService buildExchangeService() {
         ExchangeCryptoCurrencyUseCase exchangeCryptoCurrencyUseCase = new ExchangeCryptoCurrencyUseCaseImpl(bankAccountRepository, transactionExecuter, walletRepository, transactionHistoryRepository);
-        PlaceOrderUseCase placeOrderUseCase = new PlaceOrderUseCaseImpl(userRepository, walletRepository, bankAccountRepository,
-        exchangeInstance, transactionHistoryRepository, transactionExecuter);
+        PlaceOrderUseCase placeOrderUseCase = new PlaceOrderUseCaseImpl(userRepository, walletRepository, bankAccountRepository, 
+                exchangeInstance, transactionHistoryRepository, transactionExecuter);
         return new ExchangeService(exchangeCryptoCurrencyUseCase, placeOrderUseCase);
     }
 

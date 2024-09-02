@@ -11,6 +11,7 @@ import com.globant.domain.crypto.WalletID;
 import com.globant.domain.exceptions.DomainException;
 import com.globant.domain.exceptions.InsufficientCurrencyException;
 import com.globant.domain.exceptions.InsufficientMoneyException;
+import com.globant.domain.exceptions.InvalidAmountException;
 import com.globant.domain.exchange.Transaction;
 import com.globant.domain.exchange.TransactionHistory;
 import com.globant.domain.exchange.TransactionType;
@@ -56,10 +57,11 @@ public class ExchangeCryptoCurrencyUseCaseImpl implements ExchangeCryptoCurrency
     private void validateExchange(ExchangeCryptoCurrencyDTO dto) throws DomainException{
         BigDecimal exchangeAmount = cache.exchangeWallet.get(dto.getCryptoName()).getAmount();
         BigDecimal totalAmount = dto.getAmount().multiply(cache.exchange.getPrice(dto.getCryptoName()));
-        boolean isEnoughMoney = cache.currentUserBankAccount.getMoney().compareTo(totalAmount) > 0;
-        boolean isEnoughCryptoCurrency = exchangeAmount.compareTo(dto.getAmount()) > 0;
+        boolean isEnoughMoney = cache.currentUserBankAccount.getMoney().compareTo(totalAmount) >= 0;
+        boolean isEnoughCryptoCurrency = exchangeAmount.compareTo(dto.getAmount()) >= 0;
         if (!isEnoughMoney){throw InsufficientCurrencyException.insufficientAmount();}
         if (!isEnoughCryptoCurrency){throw InsufficientMoneyException.insufficientMoney();}
+        if (dto.getAmount().signum() <= 0){throw InvalidAmountException.invalidAmount();}
     }
     
     private void exchangeCryptoCurrency(ExchangeCryptoCurrencyDTO dto) throws DomainException{
@@ -79,7 +81,7 @@ public class ExchangeCryptoCurrencyUseCaseImpl implements ExchangeCryptoCurrency
     
     private void addTransaction(ExchangeCryptoCurrencyDTO dto) throws DomainException{
         BigDecimal totalPrice = dto.getAmount().multiply(cache.exchange.getPrice(dto.getCryptoName()));
-        Transaction transaction = new Transaction(totalPrice, dto.getCryptoName(), dto.getUserID(), TransactionType.BUY);
+        Transaction transaction = new Transaction(totalPrice, dto.getAmount(),dto.getCryptoName(), dto.getUserID(), TransactionType.BUY);
         cache.currentUserTransactionHistory.addTransaction(transaction);
         transactionHistoryRepository.save(dto.getUserID(), cache.currentUserTransactionHistory);
     }
