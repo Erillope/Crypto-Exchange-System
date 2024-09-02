@@ -4,6 +4,8 @@ import com.globant.application.repositories.ExchangeInstance;
 import com.globant.application.repositories.Repository;
 import com.globant.domain.crypto.Bitcoin;
 import com.globant.domain.crypto.CryptoCurrencyName;
+import com.globant.domain.crypto.Ethereum;
+import com.globant.domain.crypto.Ripple;
 import com.globant.domain.crypto.Wallet;
 import com.globant.domain.crypto.WalletID;
 import com.globant.domain.exceptions.DomainException;
@@ -38,7 +40,6 @@ public class ExchangeInitializer implements Initializer{
     @Override
     public void init() throws DomainException{
         Preferences prefs = Preferences.userNodeForPackage(ExchangeInitializer.class);
-        //prefs.putBoolean("FirstExecution", true);
         if (prefs.getBoolean("FirstExecution", true)){
             initExchange();
             prefs.putBoolean("FirstExecution", false);
@@ -48,8 +49,12 @@ public class ExchangeInitializer implements Initializer{
     public void initExchange() throws DomainException{
         Exchange exchange = exchangeInstance.get();
         Wallet exchangeWallet = walletFactory.createWallet();
-        exchange.addPrice(CryptoCurrencyName.BITCOIN, BigDecimal.TEN);
-        exchangeWallet.addAmount(CryptoCurrencyName.BITCOIN, new Bitcoin(BigDecimal.TEN));
+        exchange.updatePrice(CryptoCurrencyName.BITCOIN, BigDecimal.TEN);
+        exchange.updatePrice(CryptoCurrencyName.ETHEREUM, new BigDecimal("8"));
+        exchange.updatePrice(CryptoCurrencyName.RIPPLE, new BigDecimal("5"));
+        exchangeWallet.addAmount(CryptoCurrencyName.BITCOIN, new Bitcoin(new BigDecimal("300")));
+        exchangeWallet.addAmount(CryptoCurrencyName.ETHEREUM, new Ethereum(new BigDecimal("200")));
+        exchangeWallet.addAmount(CryptoCurrencyName.RIPPLE, new Ripple(new BigDecimal("200")));
         BankAccount exchangeBankAccount = bankAccountFactory.createAccount(BankName.PACIFICO, exchange.getNumberAccount().getNumberAccount());
         exchange.setWalletID(exchangeWallet.getID());
         walletRepository.save(exchange.getWalletID(), exchangeWallet);

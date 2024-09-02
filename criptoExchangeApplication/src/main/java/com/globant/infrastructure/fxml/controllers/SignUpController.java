@@ -38,11 +38,11 @@ public class SignUpController implements Initializable {
     
     @FXML
     private void signUp(ActionEvent event) throws IOException{
-        SignUpDTO dto = new SignUpDTO(nameField.getText(), emailField.getText(), passwordField.getText(),
-                numberAccountField.getText(),banckAccountChoice.getValue());
+        SignUpDTO dto = new SignUpDTO(nameField.getText().trim(), emailField.getText().trim(), passwordField.getText(),
+                numberAccountField.getText().trim(),banckAccountChoice.getValue());
         try{
             FxmlApp.authenticationService.signUp(dto);
-            FxmlApp.setRoot("mainMenu");
+            FxmlApp.setRoot("authMenu");
         }
         catch(DomainException e){FxmlApp.showErrorMessage(e);}  
     }

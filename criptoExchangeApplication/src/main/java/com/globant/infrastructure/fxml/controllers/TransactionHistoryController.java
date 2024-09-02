@@ -18,7 +18,7 @@ import javafx.scene.layout.VBox;
  *
  * @author erillope
  */
-public class ViewTransactionHistoryController implements Initializable{
+public class TransactionHistoryController implements Initializable{
 
     @FXML
     private VBox historyBox;

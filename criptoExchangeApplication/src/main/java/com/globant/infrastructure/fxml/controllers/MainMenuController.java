@@ -19,7 +19,7 @@ public class MainMenuController{
 
     @FXML
     private void viewWalletBalance(ActionEvent event) throws IOException {
-        FxmlApp.setRoot("viewWalletBalance");
+        FxmlApp.setRoot("WalletBalance");
     }
 
     @FXML
@@ -29,7 +29,23 @@ public class MainMenuController{
 
     @FXML
     private void viewTransactionHistory(ActionEvent event) throws IOException {
-        FxmlApp.setRoot("viewTransactionHistory");
+        FxmlApp.setRoot("TransactionHistory");
+    }
+
+    @FXML
+    private void placeBuyOrder(ActionEvent event) throws IOException {
+        FxmlApp.setRoot("placeBuyOrder");
+    }
+
+    @FXML
+    private void placeSaleOrder(ActionEvent event) throws IOException {
+        FxmlApp.setRoot("placeSaleOrder");
+    }
+
+    @FXML
+    private void signOut(ActionEvent event) throws IOException {
+        FxmlApp.authenticationService.signOut();
+        FxmlApp.setRoot("authMenu");
     }
 
 }

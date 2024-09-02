@@ -22,10 +22,11 @@ public class DepositeMoneyController{
     @FXML
     private void depositeMoney(ActionEvent event) {
         try{
-            DepositeMoneyDTO dto = new DepositeMoneyDTO(new BigDecimal(amountField.getText()), 
+            DepositeMoneyDTO dto = new DepositeMoneyDTO(new BigDecimal(amountField.getText().trim()), 
                     FxmlApp.authenticationService.getSignedUserDTO().getId());
             try{
                 FxmlApp.walletService.depositeMoney(dto);
+                FxmlApp.setRoot("mainMenu");
             }
             catch(DomainException e){FxmlApp.showErrorMessage(e);} 
         }

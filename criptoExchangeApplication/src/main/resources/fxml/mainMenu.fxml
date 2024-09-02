@@ -11,5 +11,8 @@
       <Button mnemonicParsing="false" onAction="#viewWalletBalance" text="View Wallet Balance" />
       <Button mnemonicParsing="false" onAction="#buyFromExchange" text="Buy From Exchange" />
       <Button mnemonicParsing="false" onAction="#viewTransactionHistory" text="View Transaction History" />
+      <Button mnemonicParsing="false" onAction="#placeBuyOrder" text="Place Buy Order" />
+      <Button mnemonicParsing="false" onAction="#placeSaleOrder" text="Place Sale Order" />
+      <Button mnemonicParsing="false" onAction="#signOut" text="Sign out" />
    </children>
 </VBox>

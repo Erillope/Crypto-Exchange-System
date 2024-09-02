@@ -20,7 +20,7 @@ public class SignInController{
 
     @FXML
     private void signIp(ActionEvent event) throws IOException {
-        SignInDTO dto = new SignInDTO(emailField.getText(), passwordField.getText());
+        SignInDTO dto = new SignInDTO(emailField.getText().trim(), passwordField.getText().trim());
         try{
             FxmlApp.authenticationService.signIn(dto);
             FxmlApp.setRoot("mainMenu");
