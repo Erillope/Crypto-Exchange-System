@@ -49,9 +49,9 @@ public class ExchangeInitializer implements Initializer{
     public void initExchange() throws DomainException{
         Exchange exchange = exchangeInstance.get();
         Wallet exchangeWallet = walletFactory.createWallet();
-        exchange.updatePrice(CryptoCurrencyName.BITCOIN, BigDecimal.TEN);
-        exchange.updatePrice(CryptoCurrencyName.ETHEREUM, new BigDecimal("8"));
-        exchange.updatePrice(CryptoCurrencyName.RIPPLE, new BigDecimal("5"));
+        exchange.updatePrice(CryptoCurrencyName.BITCOIN, new BigDecimal("1000"));
+        exchange.updatePrice(CryptoCurrencyName.ETHEREUM, new BigDecimal("500"));
+        exchange.updatePrice(CryptoCurrencyName.RIPPLE, new BigDecimal("700"));
         exchangeWallet.addAmount(CryptoCurrencyName.BITCOIN, new Bitcoin(new BigDecimal("300")));
         exchangeWallet.addAmount(CryptoCurrencyName.ETHEREUM, new Ethereum(new BigDecimal("200")));
         exchangeWallet.addAmount(CryptoCurrencyName.RIPPLE, new Ripple(new BigDecimal("200")));
