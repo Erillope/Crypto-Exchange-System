@@ -19,7 +19,6 @@ target/
 *.jar
 *.war
 *.ear
-*.ser
 
 .DS_Store
 Thumbs.db
