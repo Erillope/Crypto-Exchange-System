@@ -1,8 +1,8 @@
 package com.globant.application.repositories;
 
-import com.globant.domain.exceptions.KeyNotFoundException;
-import com.globant.domain.exceptions.RepositoryConnectionException;
-import com.globant.domain.exceptions.UserNotFoundException;
+import com.globant.application.repositories.exceptions.KeyNotFoundException;
+import com.globant.application.repositories.exceptions.RepositoryConnectionException;
+import com.globant.application.repositories.exceptions.UserNotFoundException;
 import com.globant.domain.user.User;
 import com.globant.domain.user.UserID;
 import com.globant.domain.util.Serializer;

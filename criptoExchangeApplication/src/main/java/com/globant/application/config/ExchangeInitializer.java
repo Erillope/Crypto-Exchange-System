@@ -11,9 +11,9 @@ import com.globant.domain.crypto.WalletID;
 import com.globant.domain.exceptions.DomainException;
 import com.globant.domain.exchange.Exchange;
 import com.globant.domain.factories.BankAccountFactory;
-import com.globant.domain.factories.BankName;
+import com.globant.domain.user.accounts.BankName;
 import com.globant.domain.factories.WalletFactory;
-import com.globant.domain.user.BankAccount;
+import com.globant.domain.user.accounts.BankAccount;
 import java.math.BigDecimal;
 import java.util.prefs.Preferences;
 

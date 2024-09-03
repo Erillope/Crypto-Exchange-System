@@ -6,18 +6,35 @@ import com.globant.domain.exceptions.InvalidAmountException;
 import com.globant.infrastructure.fxml.FxmlApp;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 /**
  *
  * @author erillope
  */
-public class DepositeMoneyController{
+public class DepositeMoneyController implements Initializable{
 
     @FXML
     private TextField amountField;
+    @FXML
+    private ImageView zundamonView;
+    @FXML
+    private Label message;
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        message.setText("Here you can add USD\n"
+                + "to make purchases");
+    }
     
     @FXML
     private void depositeMoney(ActionEvent event) {
@@ -28,13 +45,18 @@ public class DepositeMoneyController{
                 FxmlApp.walletService.depositeMoney(dto);
                 FxmlApp.setRoot("mainMenu");
             }
-            catch(DomainException e){FxmlApp.showErrorMessage(e);} 
+            catch(DomainException e){showException(e);} 
         }
-        catch(Exception e){FxmlApp.showErrorMessage(InvalidAmountException.invalidAmount());}
+        catch(Exception e){showException(InvalidAmountException.invalidAmount());}
     }
 
     @FXML
-    private void ReturnMenu(ActionEvent event) throws IOException {
+    private void returnMenu(MouseEvent event) throws IOException {
         FxmlApp.setRoot("mainMenu");
+    }
+    
+    private void showException(DomainException e){
+        message.setText(e.getMessage());
+        zundamonView.setImage(new Image(FxmlApp.class.getResource("/gallery/zundamon2.png").toString()));
     }
 }

@@ -12,31 +12,41 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 
 /**
  *
  * @author erillope
  */
 public class PlaceBuyOrderController implements Initializable{
-
-    @FXML
-    private VBox coinsVBox;
-    @FXML
-    private TextField amountField;
-    @FXML
-    private TextField maxPriceField;
     
     private CryptoCurrencyName cryptoName;
+    @FXML
+    private HBox bitcoinBox;
+    @FXML
+    private HBox ethereumBox;
+    @FXML
+    private HBox rippleBox;
+    @FXML
+    private ImageView zundamonView;
+    @FXML
+    private Label message;
+    @FXML
+    private TextField maxPriceField;
+    @FXML
+    private TextField amountField;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        for (CryptoCurrencyName cryptoName: CryptoCurrencyName.values()){
-            addCoinButton(cryptoName);
-        }
+        message.setText("Here you can request \na buy order,\n"
+                + "if you are lucky it will be \nsold instantly,\n"
+                + "if not it will be archived.\n"
+                + "You decide the unit price.");
     }
 
     @FXML
@@ -48,21 +58,44 @@ public class PlaceBuyOrderController implements Initializable{
                 FxmlApp.exchangeService.placeBuyOrder(dto);
                 FxmlApp.setRoot("placeBuyOrder");
             }
-            catch(DomainException e){FxmlApp.showErrorMessage(e);} 
+            catch(DomainException e){showError(e);} 
         }
-        catch(Exception e){FxmlApp.showErrorMessage(InvalidAmountException.invalidAmount());}
+        catch(Exception e){showError(InvalidAmountException.invalidAmount());}
+    }
+
+
+    @FXML
+    private void selectBitcoin(MouseEvent event) {
+        this.cryptoName = CryptoCurrencyName.BITCOIN;
+        bitcoinBox.getStyleClass().add("hbox-activated");
+        ethereumBox.getStyleClass().remove("hbox-activated");
+        rippleBox.getStyleClass().remove("hbox-activated");
     }
 
     @FXML
-    private void returnMenu(ActionEvent event) throws IOException {
+    private void selectEthereum(MouseEvent event) {
+        this.cryptoName = CryptoCurrencyName.ETHEREUM;
+        bitcoinBox.getStyleClass().remove("hbox-activated");
+        ethereumBox.getStyleClass().add("hbox-activated");
+        rippleBox.getStyleClass().remove("hbox-activated");
+    }
+
+    @FXML
+    private void selectRipple(MouseEvent event) {
+        this.cryptoName = CryptoCurrencyName.RIPPLE;
+        bitcoinBox.getStyleClass().remove("hbox-activated");
+        ethereumBox.getStyleClass().remove("hbox-activated");
+        rippleBox.getStyleClass().add("hbox-activated");
+    }
+
+
+    @FXML
+    private void returnMenu(MouseEvent event) throws IOException {
         FxmlApp.setRoot("mainMenu");
     }
     
-    private void addCoinButton(CryptoCurrencyName cryptoName){
-       HBox hBox = new HBox();
-       Button button = new Button(cryptoName.name());
-       button.setOnAction(e -> {this.cryptoName = cryptoName;});
-       hBox.getChildren().add(button);
-       coinsVBox.getChildren().add(hBox);
-   }
+    private void showError(DomainException e){
+        message.setText(e.getMessage());
+        zundamonView.setImage(new Image(FxmlApp.class.getResource("/gallery/zundamon2.png").toString()));
+    }
 }

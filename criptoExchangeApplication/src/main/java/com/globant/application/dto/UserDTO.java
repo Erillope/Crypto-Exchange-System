@@ -1,7 +1,7 @@
 package com.globant.application.dto;
 
 import com.globant.domain.crypto.WalletID;
-import com.globant.domain.user.NumberAccount;
+import com.globant.domain.user.accounts.NumberAccount;
 import com.globant.domain.user.UserID;
 
 /**

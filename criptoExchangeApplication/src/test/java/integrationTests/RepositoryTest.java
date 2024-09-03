@@ -5,9 +5,9 @@ import com.globant.application.repositories.UserSerRepository;
 import com.globant.domain.crypto.WalletID;
 import com.globant.domain.crypto.WalletUUID;
 import com.globant.domain.factories.UserFactory;
-import com.globant.domain.user.GmailAccount;
+import com.globant.domain.user.accounts.GmailAccount;
 import com.globant.domain.user.User;
-import com.globant.domain.user.UserAccount;
+import com.globant.domain.user.accounts.UserAccount;
 
 /**
  *

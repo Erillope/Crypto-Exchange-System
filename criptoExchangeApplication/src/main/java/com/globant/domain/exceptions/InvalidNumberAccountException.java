@@ -10,6 +10,8 @@ public class InvalidNumberAccountException extends DomainException{
     }
     
     public static InvalidNumberAccountException invalidNumberAccount(){
-        return new InvalidNumberAccountException("INVALID NUMBER ACCOUNT");
+        return new InvalidNumberAccountException("INVALID NUMBER ACCOUNT:\n"
+                + "The account number must be\n"
+                + "between 8 and 12 digits long.");
     }
 }

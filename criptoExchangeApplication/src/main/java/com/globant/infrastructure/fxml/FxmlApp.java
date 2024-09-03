@@ -40,6 +40,12 @@ public class FxmlApp extends Application implements Boot{
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("authMenu"), 640, 480);
         stage.setScene(scene);
+        stage.setWidth(645);
+        stage.setHeight(555);
+        stage.setMinWidth(645);
+        stage.setMinHeight(555);
+        stage.setMaxWidth(645);
+        stage.setMaxHeight(555);
         stage.show();
     }
 

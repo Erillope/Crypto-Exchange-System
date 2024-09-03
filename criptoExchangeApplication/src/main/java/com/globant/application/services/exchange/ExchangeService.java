@@ -10,13 +10,15 @@ import com.globant.domain.exceptions.DomainException;
  *
  * @author erillope
  */
-public class ExchangeService implements ExchangeCryptoCurrencyUseCase, PlaceOrderUseCase{
+public class ExchangeService implements ExchangeCryptoCurrencyUseCase, PlaceSaleOrderUseCase, PlaceBuyOrderUseCase{
     private final ExchangeCryptoCurrencyUseCase exchangeUseCase;
-    private final PlaceOrderUseCase placeOrderUseCase;
+    private final PlaceSaleOrderUseCase placeSaleOrderUseCase;
+    private final PlaceBuyOrderUseCase placeBuyOrderUseCase;
 
-    public ExchangeService(ExchangeCryptoCurrencyUseCase exchangeUseCase, PlaceOrderUseCase placeBuyOrderUseCase) {
+    public ExchangeService(ExchangeCryptoCurrencyUseCase exchangeUseCase, PlaceSaleOrderUseCase placeSaleOrderUseCase, PlaceBuyOrderUseCase placeBuyOrderUseCase) {
         this.exchangeUseCase = exchangeUseCase;
-        this.placeOrderUseCase = placeBuyOrderUseCase;
+        this.placeSaleOrderUseCase = placeSaleOrderUseCase;
+        this.placeBuyOrderUseCase = placeBuyOrderUseCase;
     }
 
     @Override
@@ -31,12 +33,12 @@ public class ExchangeService implements ExchangeCryptoCurrencyUseCase, PlaceOrde
 
     @Override
     public void placeBuyOrder(PlaceBuyOrderDTO dto) throws DomainException{
-        this.placeOrderUseCase.placeBuyOrder(dto);
+        this.placeBuyOrderUseCase.placeBuyOrder(dto);
     }
 
     @Override
     public void placeSaleOrder(PlaceSaleOrderDTO dto) throws DomainException{
-        this.placeOrderUseCase.placeSaleOrder(dto);
+        this.placeSaleOrderUseCase.placeSaleOrder(dto);
     }
     
 }

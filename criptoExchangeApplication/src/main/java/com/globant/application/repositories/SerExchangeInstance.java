@@ -1,6 +1,6 @@
 package com.globant.application.repositories;
 
-import com.globant.domain.exceptions.RepositoryConnectionException;
+import com.globant.application.repositories.exceptions.RepositoryConnectionException;
 import com.globant.domain.exchange.Exchange;
 import com.globant.domain.util.Serializer;
 import java.io.IOException;

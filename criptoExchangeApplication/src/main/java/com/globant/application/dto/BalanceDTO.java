@@ -9,8 +9,8 @@ import com.globant.domain.util.OnlyReadMap;
  * @author erillope
  */
 public class BalanceDTO {
-    public final BigDecimal money;
-    public final OnlyReadMap<CryptoCurrencyName, BigDecimal> cryptoCurrencyBalance;
+    private final BigDecimal money;
+    private final OnlyReadMap<CryptoCurrencyName, BigDecimal> cryptoCurrencyBalance;
     
     public BalanceDTO(BigDecimal money, OnlyReadMap<CryptoCurrencyName, BigDecimal> cryptoCurrencyBalance){
         this.money = money;

@@ -1,6 +1,6 @@
 package com.globant.application.repositories;
 
-import com.globant.domain.exceptions.KeyNotFoundException;
+import com.globant.application.repositories.exceptions.KeyNotFoundException;
 import com.globant.domain.user.User;
 import com.globant.domain.user.UserID;
 

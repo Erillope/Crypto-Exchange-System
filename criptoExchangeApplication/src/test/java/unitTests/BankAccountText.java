@@ -1,7 +1,7 @@
 package unitTests;
 
 import com.globant.domain.exceptions.InvalidNumberAccountException;
-import com.globant.domain.user.NumberAccount;
+import com.globant.domain.user.accounts.NumberAccount;
 
 /**
  *
