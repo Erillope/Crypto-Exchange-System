@@ -2,8 +2,8 @@ package com.globant.application.repositories;
 
 import com.globant.domain.crypto.Wallet;
 import com.globant.domain.crypto.WalletID;
-import com.globant.domain.exceptions.KeyNotFoundException;
-import com.globant.domain.exceptions.WalletNotFoundException;
+import com.globant.application.repositories.exceptions.KeyNotFoundException;
+import com.globant.application.repositories.exceptions.WalletNotFoundException;
 import com.globant.domain.util.Serializer;
 
 /**

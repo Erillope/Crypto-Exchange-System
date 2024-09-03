@@ -6,14 +6,14 @@ import com.globant.application.repositories.UserRepository;
 import com.globant.domain.crypto.Wallet;
 import com.globant.domain.crypto.WalletID;
 import com.globant.domain.exceptions.DomainException;
-import com.globant.domain.exceptions.UserAlreadyExistException;
+import com.globant.application.exceptions.UserAlreadyExistException;
 import com.globant.domain.factories.BankAccountFactory;
 import com.globant.domain.factories.UserAccountFactory;
 import com.globant.domain.factories.UserFactory;
 import com.globant.domain.factories.WalletFactory;
-import com.globant.domain.user.BankAccount;
+import com.globant.domain.user.accounts.BankAccount;
 import com.globant.domain.user.User;
-import com.globant.domain.user.UserAccount;
+import com.globant.domain.user.accounts.UserAccount;
 
 /**
  *

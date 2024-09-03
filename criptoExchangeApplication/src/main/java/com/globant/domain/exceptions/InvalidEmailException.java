@@ -9,6 +9,7 @@ public class InvalidEmailException extends InvalidUserAccountException{
         super(msg);
     }
     
-    public static InvalidEmailException invalidEmail(){return new InvalidEmailException("INVALID EMAIL");}
+    public static InvalidEmailException invalidEmail()
+    {return new InvalidEmailException("INVALID EMAIL:\nOnly Gmail and Outlook \nare valid");}
 
 }

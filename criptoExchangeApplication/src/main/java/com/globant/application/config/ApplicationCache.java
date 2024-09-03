@@ -11,25 +11,16 @@ import com.globant.application.repositories.WalletSerRepository;
 import com.globant.domain.crypto.Wallet;
 import com.globant.domain.crypto.WalletID;
 import com.globant.domain.exceptions.DomainException;
-import com.globant.domain.exchange.Exchange;
 import com.globant.domain.exchange.TransactionHistory;
-import com.globant.domain.user.BankAccount;
-import com.globant.domain.user.User;
+import com.globant.domain.user.accounts.BankAccount;
 import com.globant.domain.user.UserID;
 
 /**
  *
  * @author erillope
  */
-public class ApplicationCache implements Cache{
+public class ApplicationCache extends Cache{
     private static ApplicationCache instance;
-    public User currentUser;
-    public Wallet currentUserWallet;
-    public BankAccount currentUserBankAccount;
-    public Exchange exchange;
-    public Wallet exchangeWallet;
-    public BankAccount exchangeBankAccount;
-    public TransactionHistory currentUserTransactionHistory;
     
     private final UserRepository userRepository;
     private final Repository<String, BankAccount> bankAccountRepository;

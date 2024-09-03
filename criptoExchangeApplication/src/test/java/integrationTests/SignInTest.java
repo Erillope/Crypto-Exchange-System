@@ -5,7 +5,7 @@ import com.globant.application.config.ServiceBuilder;
 import com.globant.application.dto.SignInDTO;
 import com.globant.application.dto.SignUpDTO;
 import com.globant.application.services.authentication.AuthenticationService;
-import com.globant.domain.factories.BankName;
+import com.globant.domain.user.accounts.BankName;
 
 /**
  *

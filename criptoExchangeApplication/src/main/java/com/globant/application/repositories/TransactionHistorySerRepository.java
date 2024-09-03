@@ -1,7 +1,7 @@
 package com.globant.application.repositories;
 
-import com.globant.domain.exceptions.KeyNotFoundException;
-import com.globant.domain.exceptions.TransactionHistoryNotFoundException;
+import com.globant.application.repositories.exceptions.KeyNotFoundException;
+import com.globant.application.repositories.exceptions.TransactionHistoryNotFoundException;
 import com.globant.domain.exchange.TransactionHistory;
 import com.globant.domain.user.UserID;
 import com.globant.domain.util.Serializer;

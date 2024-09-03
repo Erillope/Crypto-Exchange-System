@@ -4,9 +4,9 @@ import com.globant.domain.exceptions.InvalidEmailException;
 import com.globant.domain.exceptions.InvalidPasswordException;
 import com.globant.domain.exceptions.InvalidUserAccountException;
 import com.globant.domain.exceptions.InvalidUserNameException;
-import com.globant.domain.user.GmailAccount;
-import com.globant.domain.user.OutlookAccount;
-import com.globant.domain.user.UserAccount;
+import com.globant.domain.user.accounts.GmailAccount;
+import com.globant.domain.user.accounts.OutlookAccount;
+import com.globant.domain.user.accounts.UserAccount;
 
 /**
  *

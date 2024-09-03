@@ -1,6 +1,5 @@
 package com.globant.domain.exchange;
 
-import com.globant.domain.exceptions.InvalidAmountException;
 import com.globant.domain.crypto.CryptoCurrency;
 import com.globant.domain.crypto.CryptoCurrencyName;
 import com.globant.domain.user.UserID;

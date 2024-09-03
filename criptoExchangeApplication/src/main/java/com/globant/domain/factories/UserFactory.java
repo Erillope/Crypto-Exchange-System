@@ -2,9 +2,9 @@ package com.globant.domain.factories;
 
 import com.globant.domain.crypto.WalletID;
 import com.globant.domain.exceptions.InvalidNumberAccountException;
-import com.globant.domain.user.NumberAccount;
+import com.globant.domain.user.accounts.NumberAccount;
 import com.globant.domain.user.User;
-import com.globant.domain.user.UserAccount;
+import com.globant.domain.user.accounts.UserAccount;
 
 /**
  *

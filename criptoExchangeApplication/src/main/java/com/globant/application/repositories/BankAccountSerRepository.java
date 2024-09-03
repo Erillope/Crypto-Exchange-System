@@ -1,8 +1,8 @@
 package com.globant.application.repositories;
 
-import com.globant.domain.exceptions.BankAccountNotFoundException;
-import com.globant.domain.exceptions.KeyNotFoundException;
-import com.globant.domain.user.BankAccount;
+import com.globant.application.repositories.exceptions.BankAccountNotFoundException;
+import com.globant.application.repositories.exceptions.KeyNotFoundException;
+import com.globant.domain.user.accounts.BankAccount;
 import com.globant.domain.util.Serializer;
 
 /**

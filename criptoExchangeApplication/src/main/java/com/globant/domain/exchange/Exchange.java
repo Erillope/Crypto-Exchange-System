@@ -7,7 +7,7 @@ import com.globant.domain.crypto.CryptoCurrencyName;
 import com.globant.domain.crypto.WalletID;
 import com.globant.domain.crypto.WalletUUID;
 import com.globant.domain.exceptions.InvalidNumberAccountException;
-import com.globant.domain.user.NumberAccount;
+import com.globant.domain.user.accounts.NumberAccount;
 import com.globant.domain.util.OnlyReadCollection;
 import com.globant.domain.util.OnlyReadCollectionImpl;
 import com.globant.domain.util.OnlyReadMap;
@@ -29,8 +29,8 @@ public class Exchange implements Serializable{
     private WalletID walletID;
     private final Map<CryptoCurrencyName, BigDecimal> marketPrices;
     private final Map<CryptoCurrencyName, List<BigDecimal>> cryptoHistory;
-    public final List<BuyOrder> buyOrderBook;
-    public final List<SalesOrder> salesOrderBook;
+    private final List<BuyOrder> buyOrderBook;
+    private final List<SalesOrder> salesOrderBook;
     
     private Exchange(){
         try{numberAccount = new NumberAccount("6578435789");}
@@ -48,16 +48,12 @@ public class Exchange implements Serializable{
                         && o.getCryptoName() == buyOrder.getCryptoName() && !o.getUserID().equals(buyOrder.getUserID())).
                 collect(Collectors.toList());
         orders.sort(Comparator.comparing(SalesOrder::getMinPrice));
-        for (SalesOrder s: orders){
-            System.out.println(s+", "+s.getAmount()+", "+s.getMinPrice());
-        }
         List<SalesOrder> selectedOrders = new ArrayList<>();
         BigDecimal amount = BigDecimal.ZERO;
         for (SalesOrder order: orders){
             amount = amount.add(order.getRemainigAmount());
             selectedOrders.add(order);
             if (amount.compareTo(buyOrder.getRemainigAmount()) >= 0){
-                System.out.println(selectedOrders);
                 return new OnlyReadCollectionImpl(selectedOrders);
             }
         }
@@ -100,6 +96,14 @@ public class Exchange implements Serializable{
     
     public OnlyReadMap<CryptoCurrencyName, BigDecimal> getMarketPrices()
     {return new OnlyReadMapImpl<>(marketPrices);}
+    
+    public void addBuyOrder(BuyOrder order){this.buyOrderBook.add(order);}
+    
+    public void addSaleOrder(SalesOrder order){this.salesOrderBook.add(order);}
+    
+    public void removeBuyOrder(BuyOrder order){this.buyOrderBook.remove(order);}
+    
+    public void removeSaleOrder(SalesOrder order){this.salesOrderBook.remove(order);}
     
     public NumberAccount getNumberAccount(){return numberAccount;}
     

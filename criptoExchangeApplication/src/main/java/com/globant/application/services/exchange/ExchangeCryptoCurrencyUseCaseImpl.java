@@ -1,6 +1,6 @@
 package com.globant.application.services.exchange;
 
-import com.globant.application.config.ApplicationCache;
+import com.globant.application.config.Cache;
 import com.globant.application.dto.AvailableCoinsDTO;
 import com.globant.application.dto.ExchangeCryptoCurrencyDTO;
 import com.globant.application.repositories.Repository;
@@ -15,8 +15,8 @@ import com.globant.domain.exceptions.InvalidAmountException;
 import com.globant.domain.exchange.Transaction;
 import com.globant.domain.exchange.TransactionHistory;
 import com.globant.domain.exchange.TransactionType;
-import com.globant.domain.factories.CryptoCurrencyFactory;
-import com.globant.domain.user.BankAccount;
+import com.globant.domain.factories.creationorders.CryptoCurrencyFactory;
+import com.globant.domain.user.accounts.BankAccount;
 import com.globant.domain.user.UserID;
 import java.math.BigDecimal;
 
@@ -30,7 +30,7 @@ public class ExchangeCryptoCurrencyUseCaseImpl implements ExchangeCryptoCurrency
     private final Repository<WalletID, Wallet> walletRepository;
     private final Repository<UserID, TransactionHistory> transactionHistoryRepository;
     private final CryptoCurrencyFactory cryptoFactory;
-    private final ApplicationCache cache = ApplicationCache.getInstance();
+    private final Cache cache = Cache.getGlobalCacheInstance();
 
     public ExchangeCryptoCurrencyUseCaseImpl(Repository<String, BankAccount> bankAccountRepository, BankTransactionExecuter transactionExecuter, 
             Repository<WalletID, Wallet> walletRepository, Repository<UserID, TransactionHistory> transactionHistoryRepository) {

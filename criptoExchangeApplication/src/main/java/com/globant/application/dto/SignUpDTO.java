@@ -1,6 +1,6 @@
 package com.globant.application.dto;
 
-import com.globant.domain.factories.BankName;
+import com.globant.domain.user.accounts.BankName;
 
 /**
  *

@@ -12,6 +12,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
@@ -22,6 +26,10 @@ public class TransactionHistoryController implements Initializable{
 
     @FXML
     private VBox historyBox;
+    @FXML
+    private ImageView zundamonView;
+    @FXML
+    private Label message;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -29,14 +37,33 @@ public class TransactionHistoryController implements Initializable{
         try{
             TransactionHistoryDTO history = FxmlApp.walletService.getHistory(dto);
             for (int i = 0; i < history.getHistory().size(); i++){
-                historyBox.getChildren().add(new Label(history.getHistory().get(i).toString()));
+                VBox box = new VBox();
+                box.getStyleClass().add("transaction-box");
+                Label amountLabel = new Label("amout: "+history.getHistory().get(i).getAmount().toString());
+                amountLabel.getStyleClass().add("my-label");
+                Label cryptoNameLabel = new Label("cryptoName: "+history.getHistory().get(i).getCryptoName().toString());
+                cryptoNameLabel.getStyleClass().add("my-label");
+                Label typeLabel = new Label("type: "+history.getHistory().get(i).getType().toString());
+                typeLabel.getStyleClass().add("my-label");
+                Label priceLabel = new Label("price: "+history.getHistory().get(i).getPrice().toString());
+                priceLabel.getStyleClass().add("my-label");
+                box.getChildren().addAll(amountLabel, cryptoNameLabel, typeLabel, priceLabel);
+                historyBox.getChildren().add(box);
             }
         }
         catch(DomainException e){FxmlApp.showErrorMessage(e);}
+        message.setText("Here you can review\n"
+                + "all your sales and\n"
+                + "purchase transactions.");
     }
 
     @FXML
-    private void returnMenu(ActionEvent event) throws IOException {
+    private void returnMenu(MouseEvent event) throws IOException {
         FxmlApp.setRoot("mainMenu");
+    }
+    
+    private void showError(DomainException e){
+        message.setText(e.getMessage());
+        zundamonView.setImage(new Image(FxmlApp.class.getResource("/gallery/zundamon2.png").toString()));
     }
 }

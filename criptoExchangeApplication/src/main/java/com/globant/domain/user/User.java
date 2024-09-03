@@ -1,5 +1,7 @@
 package com.globant.domain.user;
 
+import com.globant.domain.user.accounts.UserAccount;
+import com.globant.domain.user.accounts.NumberAccount;
 import java.math.BigDecimal;
 import com.globant.domain.crypto.CryptoCurrency;
 import com.globant.domain.crypto.CryptoCurrencyName;

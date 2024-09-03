@@ -1,0 +1,102 @@
+.pane-background {
+    -fx-background-image: url("../gallery/background.jpg");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
+.text-field-custom {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 3;
+    -fx-border-width: 2;
+    -fx-padding: 5;
+    -fx-font-size: 14px; 
+    -fx-prompt-text-fill: #999999;
+}
+
+.text-field-custom:focused {
+    -fx-border-color: #007bff;
+    -fx-background-color: #f0f8ff;
+    -fx-border-width: 2;
+}
+
+.image-view-container {
+    -fx-effect: dropshadow(gaussian, #ff0000, 0, 0, 0, 0)
+}
+
+.image-view-container-activated {
+    -fx-effect: dropshadow(gaussian, #ff0000, 5, 0, 0, 0)
+}
+
+.button {
+    -fx-background-color: #3300da;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 2, 2);
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+}
+
+.button:pressed {
+    -fx-background-color: #004494;
+    -fx-text-fill: #e0e0e0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 1), 5, 0, 0, 0);
+}
+
+.hbox-bitcoin {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #ffd700, #b8860b);
+    -fx-background-radius: 15;
+    -fx-border-radius: 15; 
+    -fx-border-color: #333;
+    -fx-border-width: 1;
+}
+
+.hbox-ethereum {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #f9f9f9, #c0c0c0);
+    -fx-background-radius: 15;
+    -fx-border-radius: 15; 
+    -fx-border-color: #333;
+    -fx-border-width: 1;
+}
+
+.hbox-ripple {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #1ea2d6, #117196);
+    -fx-background-radius: 15;
+    -fx-border-radius: 15; 
+    -fx-border-color: #333;
+    -fx-border-width: 1;
+}
+
+.hbox-money {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #1be35a, #0c7a2f);
+    -fx-background-radius: 15;
+    -fx-border-radius: 15; 
+    -fx-border-color: #333;
+    -fx-border-width: 1;
+}
+
+.hbox-activated{
+    -fx-border-color: red;
+    -fx-border-width: 2;
+}
+
+.transaction-box{
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #caca, #f9f9f9, #c0c0c0);
+    -fx-background-radius: 15;
+    -fx-border-radius: 15; 
+    -fx-border-color: #333;
+    -fx-border-width: 1;
+}
+
+.my-label{
+    -fx-font-family: "Verdana";
+    -fx-font-size: 10px;
+    -fx-font-style: italic;
+    -fx-font-weight: bold;
+    
+}

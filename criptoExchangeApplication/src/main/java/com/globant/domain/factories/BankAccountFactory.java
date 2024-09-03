@@ -1,10 +1,14 @@
 package com.globant.domain.factories;
 
+import com.globant.domain.user.accounts.BankName;
+import com.globant.domain.factories.creationorders.PichinchaAccountCreationOrder;
+import com.globant.domain.factories.creationorders.PacificoAccountCreationOrder;
+import com.globant.domain.factories.creationorders.BankAccountCreationOrder;
 import com.globant.domain.exceptions.InvalidNumberAccountException;
-import com.globant.domain.user.BankAccount;
-import com.globant.domain.user.NumberAccount;
-import com.globant.domain.user.PacificoBankAccount;
-import com.globant.domain.user.PichinchaBankAccount;
+import com.globant.domain.user.accounts.BankAccount;
+import com.globant.domain.user.accounts.NumberAccount;
+import com.globant.domain.user.accounts.PacificoBankAccount;
+import com.globant.domain.user.accounts.PichinchaBankAccount;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;

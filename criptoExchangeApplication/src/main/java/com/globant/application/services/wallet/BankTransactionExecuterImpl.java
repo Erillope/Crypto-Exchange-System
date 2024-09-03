@@ -1,7 +1,7 @@
 package com.globant.application.services.wallet;
 
 import com.globant.domain.exceptions.BankException;
-import com.globant.domain.user.BankAccount;
+import com.globant.domain.user.accounts.BankAccount;
 import java.math.BigDecimal;
 
 /**

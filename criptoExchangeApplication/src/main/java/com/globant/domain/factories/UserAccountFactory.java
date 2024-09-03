@@ -1,9 +1,12 @@
 package com.globant.domain.factories;
 
+import com.globant.domain.factories.creationorders.OutlookCreationOrder;
+import com.globant.domain.factories.creationorders.GmailCreationOrder;
+import com.globant.domain.factories.creationorders.EmailCreationOrder;
 import com.globant.domain.exceptions.InvalidUserAccountException;
-import com.globant.domain.user.GmailAccount;
-import com.globant.domain.user.OutlookAccount;
-import com.globant.domain.user.UserAccount;
+import com.globant.domain.user.accounts.GmailAccount;
+import com.globant.domain.user.accounts.OutlookAccount;
+import com.globant.domain.user.accounts.UserAccount;
 import com.globant.domain.util.EmailDomainExtractor;
 import java.util.HashMap;
 import java.util.Map;
