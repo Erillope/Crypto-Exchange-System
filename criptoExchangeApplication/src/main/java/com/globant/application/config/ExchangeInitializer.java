@@ -40,7 +40,6 @@ public class ExchangeInitializer implements Initializer{
     @Override
     public void init() throws DomainException{
         Preferences prefs = Preferences.userNodeForPackage(ExchangeInitializer.class);
-        prefs.putBoolean("FirstExecution", true);
         if (prefs.getBoolean("FirstExecution", true)){
             initExchange();
             prefs.putBoolean("FirstExecution", false);
